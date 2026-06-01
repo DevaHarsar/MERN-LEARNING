@@ -3,7 +3,7 @@
     
 }
 body{
-    background-color: rgba(175, 172, 172, 0.173);
+    background-color:  #f5f7fa;
 }
 
 
@@ -12,6 +12,7 @@ body{
      border:2px solid grey;
      border-radius:5px;
      padding:20px;
+     background-color: rgb(255, 253, 253);
 
 }
 
@@ -23,6 +24,7 @@ body{
     padding: 20px;
     border:2px solid grey;
     border-radius:5px;
+    overflow-x:auto;
 
 }
 
@@ -56,6 +58,7 @@ body{
     justify-content: flex-end;
     align-items: end;
     list-style: none;
+    font-size: 1.2rem;
 
 }
 
@@ -76,12 +79,17 @@ body{
     border:2px solid grey;
     border-radius:5px;
     padding:20px;
+    background-color: rgb(255, 253, 253);
 }
 
 .projects{
     display: flex;
     justify-content: space-between;
     gap:20px;
+}
+
+.project-card:hover{
+    transform: scale(1.05);
 }
 
 .project-card{
@@ -93,6 +101,7 @@ body{
     align-items:center;
     justify-content: center;
     background-color: rgb(255, 255, 255);
+    transition: transform 0.3s ease;
 
 }
 
@@ -100,6 +109,7 @@ body{
     padding:20px;
     border:2px solid grey;
     border-radius:2px;
+    background-color: rgb(255, 253, 253);
 }
 
 .internship{
@@ -108,6 +118,11 @@ body{
     flex-wrap:wrap;
     padding:10px;
     background-color: rgb(255, 253, 253);
+    transition: transform 0.3s ease;
+}
+
+.internship:hover{
+    transform: scale(1.01);
 }
 
 .footer-content{
@@ -117,7 +132,11 @@ body{
     padding: 10px;
     border:2px solid grey;
     border-radius:5px;
-    background-color: white;
+    background-color: rgb(255, 253, 253);
+}
+
+.education-mobile-view{
+    display:none;
 }
 
 .contact-info{
@@ -154,4 +173,52 @@ html {
 .about-text table{
     border:1px solid black;
     border-collapse: collapse;
+}
+
+@media (max-width:768px){
+
+    .header{
+        flex-direction:column;
+        position:relative;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .nav ul{
+        display:none;
+    }
+
+
+    .about{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .education-mobile-view{
+        display:block;
+    }
+
+    .about-text{
+        width:100%;
+        text-align:justify;
+    }
+
+    .about-text table{
+        display:none;
+    }
+
+    .projects{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .footer-content{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .about img{
+        max-width:100%;
+        height:auto;
+    }
 }
