@@ -26,15 +26,6 @@ body {
   margin-bottom: 10px;
 }
 
-.delete-btn {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
 .input-section {
   display: flex;
   flex-direction: column;
@@ -60,4 +51,54 @@ button {
   color: white;
   font-size: 16px;
   cursor: pointer;
+}
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 5px;
+}
+
+.task-content {
+  flex: 1;
+  word-wrap: break-word;
+  font-size: 16px;
+}
+
+.edit-btn {
+  background-color: #ffc107;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
 }
