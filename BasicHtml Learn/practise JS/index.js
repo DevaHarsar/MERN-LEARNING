@@ -88,69 +88,113 @@
 
 
 
-let arr=[10,20,30,40,50];
-arr.push(60);
-console.log(arr);
+// let arr=[10,20,30,40,50];
+// arr.push(60);
+// console.log(arr);
 
-arr.pop();
-console.log(arr);
+// arr.pop();
+// console.log(arr);
 
-arr.unshift(0);
-console.log(arr);
+// arr.unshift(0);
+// console.log(arr);
 
-arr.shift();
-console.log(arr);
+// arr.shift();
+// console.log(arr);
 
-arr.push(60);
-console.log(arr);
+// arr.push(60);
+// console.log(arr);
 
-arr.splice(1,4,5,10,15);
-console.log(arr);   
+// arr.splice(1,4,5,10,15);
+// console.log(arr);   
 
-console.log(arr.includes(30));
-console.log(arr.indexOf(40));
-console.log(arr.lastIndexOf(60));
-console.log(arr.find(x=>x>30));
+// console.log(arr.includes(30));
+// console.log(arr.indexOf(40));
+// console.log(arr.lastIndexOf(60));
+// console.log(arr.find(x=>x>30));
 
-console.log(arr.map(x=x=>x+1));
-console.log(arr.filter(x=>x>30));
-console.log(arr.reduce((acc,x)=>acc+x,0));
+// console.log(arr.map(x=x=>x+1));
+// console.log(arr.filter(x=>x>30));
+// console.log(arr.reduce((acc,x)=>acc+x,0));
 
-console.log(arr.sort((a,b)=>a-b));
-console.log(arr.sort((a,b)=>b-a));
+// console.log(arr.sort((a,b)=>a-b));
+// console.log(arr.sort((a,b)=>b-a));
 
-console.log(arr.reverse());
+// console.log(arr.reverse());
 
-console.log(arr.slice(1,3));
+// console.log(arr.slice(1,3));
 
-let[a,b]=arr;
-console.log(a+" "+b);
+// let[a,b]=arr;
+// console.log(a+" "+b);
 
-let[c,...rest]=arr;
-console.log(rest);
+// let[c,...rest]=arr;
+// console.log(rest);
 
-let copy = [...arr];
-console.log(copy);
+// let copy = [...arr];
+// console.log(copy);
 
 
 
-const user={
-    username:"Dev",
-    email:"dev@example.com"
+// const user={
+//     username:"Dev",
+//     email:"dev@example.com"
+// }
+
+// const{username,email}=user;
+// console.log(username+" "+email);
+
+// user.from="Coimbatore";
+
+// console.log(user);
+
+// console.log(Object.keys(user));
+
+// console.log(Object.values(user));
+
+// console.log(Object.entries(user));
+
+
+
+function promisecallBack(){
+    return new Promise((resolve,reject)=>{
+        let num = Math.random()*10+1;
+        if(num>5){
+            resolve(num);
+        }
+        else{
+            reject("Number is less than or equal to 5: "+num);
+        }
+    })
 }
 
-const{username,email}=user;
-console.log(username+" "+email);
-
-user.from="Coimbatore";
-
-console.log(user);
-
-console.log(Object.keys(user));
-
-console.log(Object.values(user));
-
-console.log(Object.entries(user));
+promisecallBack().then((result)=>{
+    console.log("Success: "+result);
+}).catch((error)=>{
+    console.log("Error: "+error);
+});
 
 
+function generateNumber() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(Math.random() * 10 + 1);
+        }, 1000);
+    });
+}
 
+async function callBack(){
+    try{
+        let result = await generateNumber();
+        console.log(result);
+        if(result>5){
+            console.log("Success: "+result);
+        }
+        else{
+            throw new Error("Number is less than or equal to 5: "+result);
+        }
+    }
+    catch(error){
+        console.log("Error: "+error);
+    }
+}
+
+callBack();

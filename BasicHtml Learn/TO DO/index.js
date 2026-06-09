@@ -23,7 +23,7 @@ function addTask() {
   editBtn.addEventListener("click", () => {
     const newTask = prompt("Enter new task:", taskContent.textContent);
     if (newTask && newTask.trim() !== "") {
-      taskContent.textContent = newTask; 
+      taskContent.textContent = newTask;
       let tasks = JSON.parse(localStorage.getItem("task")) || [];
       const index = tasks.indexOf(taskInputValue);
       if (index > -1) {

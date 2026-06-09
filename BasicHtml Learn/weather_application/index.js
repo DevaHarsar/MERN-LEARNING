@@ -31,3 +31,5 @@ async function getWeatherByCity() {
     document.getElementById('temperature-city').textContent = `Temperature: ${weatherData.current_weather.temperature}°C`;
     document.getElementById('windspeed-city').textContent = `Wind Speed: ${weatherData.current_weather.windspeed} km/h`;
 }
+
+
