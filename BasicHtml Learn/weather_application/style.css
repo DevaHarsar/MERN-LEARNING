@@ -7,31 +7,27 @@
 
 body {
   min-height: 100vh;
-
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.4)
-    ),
-    url("9027548.jpg");
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg");
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-
+  transition: all 0.8s ease;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  font-family: "Poppins", sans-serif;
 }
 
 .app {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1100px;
 }
 
-.app > h1 {
+.app-title {
   text-align: center;
   color: white;
   margin-bottom: 30px;
@@ -39,25 +35,23 @@ body {
 }
 
 .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 25px;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 
-.container > div {
-  background: white;
-  width: 500px;
-  min-height: 350px;
+.weather-card {
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  color: white;
+  padding: 30px;
 }
 
-.container h1 {
-  font-size: 1.3rem;
+.weather-card h2 {
   margin-bottom: 20px;
-  color: #333;
   text-align: center;
 }
 
@@ -65,74 +59,36 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 25px;
 }
 
 .weather-input input {
-  width: 100%;
-  padding: 14px;
-  border: 2px solid #ddd;
+  padding: 20px;
   border-radius: 10px;
-  font-size: 1rem;
-  transition: 0.3s;
-}
-
-.weather-input input:focus {
-  border-color: #9333ea;
+  border: none;
   outline: none;
 }
 
 .weather-input button {
-  padding: 14px;
+  padding: 15px;
   border: none;
   border-radius: 10px;
-  background: #9333ea;
-  color: white;
-  font-size: 1rem;
   cursor: pointer;
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
   transition: 0.3s;
 }
 
 .weather-input button:hover {
-  background: #7e22ce;
+  background: #1d4ed8;
 }
 
 .weather-result {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.weather-result h2 {
-  margin-bottom: 15px;
-  color: #333;
+  margin-top: 20px;
 }
 
 .weather-result p {
   margin: 10px 0;
   font-size: 1.1rem;
-  color: #555;
-}
-
-#temperature,
-#temperature-city {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #2563eb;
-}
-
-#windspeed,
-#windspeed-city {
-  font-size: 1.2rem;
-  color: #16a34a;
-}
-
-@media (max-width: 768px) {
-  .container > div {
-    width: 100%;
-  }
-
-  .app > h1 {
-    font-size: 2rem;
-  }
+  font-weight: 500;
 }

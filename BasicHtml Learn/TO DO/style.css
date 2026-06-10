@@ -10,6 +10,7 @@ body {
   align-items: center;
   height: 100vh;
   background-color: #e0e0e0;
+  font-family: "Poppins", sans-serif;
 }
 
 .input-section h1 {
@@ -54,6 +55,7 @@ button {
 }
 li {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 10px;

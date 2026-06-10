@@ -5,36 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
-    <link google-fonts rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="app">
-      <h1>Weather Application</h1>
+      <h1 class="app-title">🌤 Weather Application</h1>
+
       <div class="container">
-        <div>
-          <h1>Weather Application Based on Latitude and Longitude</h1>
-          <section class="weather-input">
-            <input type="text" placeholder="Enter Latitude" id="latitude" />
-            <input type="text" placeholder="Enter Longitude" id="longitude" />
+        <div class="weather-card">
+          <h2>Latitude & Longitude</h2>
+
+          <div class="weather-input">
+            <input type="text" id="latitude" placeholder="Latitude" />
+            <input type="text" id="longitude" placeholder="Longitude" />
             <button onclick="getWeather()">Get Weather</button>
-          </section>
-          <section class="weather-result">
-            <h2>Weather Result:</h2>
+          </div>
+
+          <div class="weather-result">
             <p id="temperature"></p>
             <p id="windspeed"></p>
-          </section>
+            <p id="weather-type"></p>
+          </div>
         </div>
-        <div>
-          <h1>Weather Application Based on City Name</h1>
-          <section class="weather-input">
-            <input type="text" placeholder="Enter City Name" id="city" />
+
+        <div class="weather-card">
+          <h2>Search by City</h2>
+
+          <div class="weather-input">
+            <input type="text" id="city" placeholder="City Name" />
             <button onclick="getWeatherByCity()">Get Weather</button>
-          </section>
-          <section class="weather-result">
-            <h2>Weather Result:</h2>
+          </div>
+
+          <div class="weather-result">
             <p id="temperature-city"></p>
             <p id="windspeed-city"></p>
-          </section>
+            <p id="weather-type-city"></p>
+          </div>
         </div>
       </div>
     </div>
