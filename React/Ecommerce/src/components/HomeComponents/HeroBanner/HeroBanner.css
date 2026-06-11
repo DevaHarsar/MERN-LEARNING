@@ -1,0 +1,13 @@
+.hero-banner{
+    background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    margin:20px;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.4);
+}

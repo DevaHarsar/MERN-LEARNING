@@ -1,0 +1,17 @@
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.11);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.heading-products {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.688);
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 600;
+}
