@@ -15,6 +15,7 @@
   justify-content: space-evenly;
   padding: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 button {

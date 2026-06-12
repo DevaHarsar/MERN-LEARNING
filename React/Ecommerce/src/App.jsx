@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import Login from "./pages/Authentication/Login/Login";
 import ProductDetails from "./pages/Products/ProductDetails/ProductDetails";
 import ProductList from "./pages/Products/ProductList/ProductList";
+import WelcomeComponent from "./components/Practice/WelcomeComponent";
 import './index.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/products/:id" element={<ProductDetails/>}/>
             <Route path="/products" element={<ProductList/>}/>
+            <Route path="/practice" element={<WelcomeComponent/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

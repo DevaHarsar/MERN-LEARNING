@@ -1,10 +1,24 @@
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 function Login() {
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsAuthenticated(true);
+
+    setUser({
+      name: "Deva",
+      email: "deva@gmail.com",
+    });
     console.log("Login Submitted");
+    navigate("/");
   };
 
   return (
@@ -45,7 +59,9 @@ function Login() {
                 />
               </div>
 
-              <button type="submit">Login</button>
+              <button type="submit" onClick={handleSubmit}>
+                Login
+              </button>
 
               <Link to="/forget-password">Forget Password</Link>
             </div>

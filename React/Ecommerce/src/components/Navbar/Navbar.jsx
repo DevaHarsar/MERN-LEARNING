@@ -1,8 +1,19 @@
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
+import{AuthContext} from "../../context/AuthContext";
+import { useContext } from "react";
 function Navbar() {
-  const isLoggedIn = false;
+
+  const {isAuthenticated,user,setIsAuthenticated,setUser} = useContext(AuthContext);
+
+  const isLoggedIn = isAuthenticated;
   const navigate = useNavigate();
+
+  const logout = () =>{
+    setIsAuthenticated(false);
+    setUser(null);
+    navigate("/login");
+  }
 
   return (
     <>
@@ -12,7 +23,10 @@ function Navbar() {
         </div>
         <div className="nav-btns">
           {isLoggedIn ? (
-            <button>Logout</button>
+            <>
+            <h3>Welcome, {user.name}</h3>
+            <button onClick={logout}>Logout</button>
+            </>
           ) : (
             <>
               <button onClick = {() => navigate("/login")}>Login</button>
