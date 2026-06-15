@@ -1,6 +1,6 @@
 import "./Categories.css";
 
-function Categories() {
+function Categories({ category, setCategory }) {
   const categories = [
     "All",
     "Electronics",
@@ -11,9 +11,9 @@ function Categories() {
 
   return (
     <div className="categories">
-      {categories.map((category) => (
-        <button key={category} className="category-btn">
-          {category}
+      {categories.map((cat) => (
+        <button key={cat} className="category-btn" onClick={() => setCategory(cat)}>
+          {cat}
         </button>
       ))}
     </div>

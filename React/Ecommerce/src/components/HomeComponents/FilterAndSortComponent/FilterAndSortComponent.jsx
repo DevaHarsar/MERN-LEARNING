@@ -1,19 +1,14 @@
 import './FilterAndSortComponent.css';
-function FilterAndSortComponent() {
+function FilterAndSortComponent({ sort, setSort }) {
   return (
     <>
       <div className="filter-bar">
-        <select>
-          <option>All Categories</option>
-          <option>Electronics</option>
-          <option>Clothing</option>
-        </select>
 
-        <select>
-          <option>Sort By</option>
-          <option>Price Low to High</option>
-          <option>Price High to Low</option>
-          <option>Newest</option>
+        <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <option value="">Sort By</option>
+          <option value="low">Price Low to High</option>
+          <option value="high">Price High to Low</option>
+          <option value="newest">Newest</option>
         </select>
       </div>
     </>

@@ -45,6 +45,16 @@
   align-items: center;
   gap: 10px;
 }
+.quantity-selector button {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
 
 .quantity-selector span {
   width: 40px;

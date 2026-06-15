@@ -5,6 +5,12 @@ import { useState } from "react";
 import "./ProductDetails.css";
 
 function ProductDetails() {
+
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("All");
+  const [sort, setSort] = useState("");
+
+  
   const params = useParams();
   const { id } = useParams();
 
@@ -82,7 +88,7 @@ function ProductDetails() {
           </ul>
         </div>
       </div>
-      <ProductList />
+      <ProductList search={search} category={category} sort={sort} />
     </>
   );
 }

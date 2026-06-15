@@ -4,9 +4,12 @@ import Home from "./pages/Home/Home";
 import MainLayout from "./layouts/MainLayout";
 import Login from "./pages/Authentication/Login/Login";
 import ProductDetails from "./pages/Products/ProductDetails/ProductDetails";
-import ProductList from "./pages/Products/ProductList/ProductList";
 import WelcomeComponent from "./components/Practice/WelcomeComponent";
-import './index.css';
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
+import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
+import SignUp from "./pages/Authentication/SignUp/SignUp";
+import "./index.css";
+import ProductsPage from "./pages/Admin/Products/ProductsPage";
 
 function App() {
   return (
@@ -15,10 +18,19 @@ function App() {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/products/:id" element={<ProductDetails/>}/>
-            <Route path="/products" element={<ProductList/>}/>
-            <Route path="/practice" element={<WelcomeComponent/>}/>
+            <Route path="/login" element={<Login />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route path="/practice" element={<WelcomeComponent />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route
+              path="/admin/*"
+              element={
+                <ProtectedRoutes>
+                  <Dashboard />
+                </ProtectedRoutes>
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>

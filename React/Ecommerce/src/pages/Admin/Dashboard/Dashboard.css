@@ -1,0 +1,24 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: 20px;
+}
+
+
+
+.add-product-section{
+    text-align: right;
+    margin: 20px;
+}
+
+.dashboard-title{   
+    margin: 20px;
+}
+
+#add-product-button{
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+}

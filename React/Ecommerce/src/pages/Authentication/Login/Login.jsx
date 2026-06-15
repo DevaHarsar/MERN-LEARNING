@@ -2,23 +2,61 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useContext } from "react";
 
 function Login() {
-  const { setIsAuthenticated, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    navigate(isAuthenticated ? "/" : "/login");
+  }, []);
 
+  const { setIsAuthenticated, setUser, user, isAuthenticated } =
+    useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsAuthenticated(true);
 
-    setUser({
-      name: "Deva",
-      email: "deva@gmail.com",
-    });
-    console.log("Login Submitted");
-    navigate("/");
+    if (user?.name === "admin" && user?.password === "admin") {
+      setUser({
+        name: "Admin",
+        email: "admin@gmail.com",
+        role: "admin",
+      });
+      localStorage.setItem(
+        
+        "user",
+        JSON.stringify({
+          name: "Admin",
+          email: "admin@gmail.com",
+          role: "admin",
+        }),
+      );
+      setIsAuthenticated(true);
+      localStorage.setItem("isAuthenticated", "true");
+      navigate("/admin/dashboard");
+    } else if (user?.name === "dev" && user?.password === "dev") {
+      setUser({
+        name: "Deva",
+        email: "deva@gmail.com",
+        role: "user",
+      });
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          name: "Deva",
+          email: "deva@gmail.com",
+          role: "user",
+        }),
+      );
+      setIsAuthenticated(true);
+      localStorage.setItem("isAuthenticated", "true");
+      navigate("/");
+    } else {
+      alert("Invalid Username or Password");
+      setIsAuthenticated(false);
+    }
   };
 
   return (
@@ -27,7 +65,7 @@ function Login() {
         <div className="form-group">
           <h1>Login Form</h1>
 
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="form-items">
               <div>
                 <img
@@ -45,6 +83,7 @@ function Login() {
                   name="username"
                   placeholder="username"
                   required
+                  onChange={(e) => setUser({ ...user, name: e.target.value })}
                 />
               </div>
 
@@ -56,6 +95,9 @@ function Login() {
                   name="password"
                   placeholder="password"
                   required
+                  onChange={(e) =>
+                    setUser({ ...user, password: e.target.value })
+                  }
                 />
               </div>
 
