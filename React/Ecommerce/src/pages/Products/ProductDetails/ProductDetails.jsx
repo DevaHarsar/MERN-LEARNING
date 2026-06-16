@@ -4,13 +4,20 @@ import { useEffect } from "react";
 import { useState } from "react";
 import "./ProductDetails.css";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function ProductDetails() {
   const [productDetails, setProductDetails] = useState(null);
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
-  const [sort, setSort] = useState("");
+  const {isAuthenticated}=useContext(AuthContext);
+  const navigate = useNavigate();
+
+
+  const [search] = useState("");
+  const [category] = useState("All");
+  const [sort] = useState("");
   const [addCommentModel, setAddCommentModel] = useState(false);
 
   const { id } = useParams();
@@ -76,7 +83,6 @@ function ProductDetails() {
             <img
               src={productDetails?.images[0]}
               alt={productDetails?.title}
-              style={{ width: "300px", height: "300px", objectFit: "cover" }}
             />
           </div>
           <div className="product-info">
@@ -108,7 +114,7 @@ function ProductDetails() {
           <div className="add-comment">
             <h2>Comments:</h2>
             <button
-              onClick={() => setAddCommentModel(true)}
+              onClick={() => isAuthenticated ? setAddCommentModel(true):navigate("/login")}
               className="add-comment-btn"
             >
               Add Comment

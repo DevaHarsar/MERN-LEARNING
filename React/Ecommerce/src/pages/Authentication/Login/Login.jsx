@@ -12,7 +12,7 @@ function Login() {
     navigate(isAuthenticated ? "/" : "/login");
   }, []);
 
-  const { setIsAuthenticated, setUser, user, isAuthenticated } =
+  const { setIsAuthenticated, setUser, user} =
     useContext(AuthContext);
 
   const handleSubmit = (e) => {
