@@ -56,6 +56,23 @@
 
 }
 
+.add-comment{
+  display: flex;
+  justify-content: space-between;
+  flex:1;
+  margin-bottom: 15px;
+}
+
+.add-comment-btn {
+  background: #4f79eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .quantity-selector span {
   width: 40px;
   text-align: center;
@@ -112,6 +129,42 @@
 .buy-btn:hover {
   background: #8b87f9;
 }
+
+.add-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: auto 20px;
+  background: #f8fafc;
+  padding: 20px;
+  width: 150%;
+  border-radius: 12px;
+}
+
+.add-comment-form label {
+  font-weight: bold;
+}
+
+.add-comment-form button {
+  padding: 10px;
+  background-color: #71cbf5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-comment-form input {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-comment-form textarea {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+} 
 
 @media (max-width: 768px) {
   .product-main {

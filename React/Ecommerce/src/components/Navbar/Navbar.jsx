@@ -56,9 +56,7 @@ function Navbar() {
               )}
 
               {user?.role === "admin" && (
-                <li onClick={() => navigate("/admin/dashboard")}>
-                  Dashboard
-                </li>
+                <li onClick={() => navigate("/admin/dashboard")}>Dashboard</li>
               )}
 
               <div className="profile-container" ref={dropdownRef}>

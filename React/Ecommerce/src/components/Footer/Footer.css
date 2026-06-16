@@ -29,6 +29,16 @@
   margin-bottom: 8px;
 }
 
+.footer-link{
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+
 .footer-section ul {
   list-style: none;
 }

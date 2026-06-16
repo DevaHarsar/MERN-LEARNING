@@ -10,6 +10,8 @@ import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes";
 import SignUp from "./pages/Authentication/SignUp/SignUp";
 import "./index.css";
 import ProductsPage from "./pages/Admin/Products/ProductsPage";
+import AddProducts from "./pages/Admin/Products/AddProducts/AddProducts";
+import EditProducts from "./pages/Admin/Products/EditProducts/EditProducts";
 
 function App() {
   return (
@@ -30,6 +32,18 @@ function App() {
                   <Dashboard />
                 </ProtectedRoutes>
               }
+            />
+            <Route path="/admin/add-products" element={
+              <ProtectedRoutes>
+                <AddProducts/>
+              </ProtectedRoutes>
+            }
+            />
+            <Route path="/admin/products/:id/edit" element={
+              <ProtectedRoutes>
+                <EditProducts/>
+              </ProtectedRoutes>
+            }
             />
           </Route>
         </Routes>

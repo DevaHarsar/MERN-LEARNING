@@ -1,0 +1,42 @@
+.edit-product-form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width:35%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+
+}
+
+.edit-product-form label {
+  font-weight: bold;
+}
+
+.edit-product-form input{
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-product-form select {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-product-form textarea {
+  padding: 25px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-product-form button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+

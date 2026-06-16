@@ -3,50 +3,70 @@ import ProductList from "../ProductList/ProductList";
 import { useEffect } from "react";
 import { useState } from "react";
 import "./ProductDetails.css";
+import axios from "axios";
 
 function ProductDetails() {
+  const [productDetails, setProductDetails] = useState(null);
 
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("");
+  const [addCommentModel, setAddCommentModel] = useState(false);
 
-  
-  const params = useParams();
   const { id } = useParams();
 
-  const[count, setCount] = useState(1);
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://dummyjson.com/products/${id}`,
+        );
+        console.log(response.data);
+        setProductDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    };
 
-  const decreaseCount = () =>{
-    if(count > 1){
-        setCount(count-1);
+    fetchProductDetails();
+  }, [id]);
+
+  const [count, setCount] = useState(1);
+
+  const decreaseCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
     }
-  }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  const productDetails = {
-    id: params.id,
-    name: `Product ${params.id}`,
-    price: 29.99,
-    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    comments: [
-      {
-        id: 1,
-        username: "John Doe",
-        comment: "Great product! Highly recommend.",
-      },
-      {
-        id: 2,
-        username: "Jane Smith",
-        comment: "Good value for the price.",
-      },
-    ],
-  };
+  // const productDetails = {
+  //   id: params.id,
+  //   name: `Product ${params.id}`,
+  //   price: 29.99,
+  //   image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12",
+  //   description:
+  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  //   comments: [
+  //     {
+  //       id: 1,
+  //       username: "John Doe",
+  //       comment: "Great product! Highly recommend.",
+  //     },
+  //     {
+  //       id: 2,
+  //       username: "Jane Smith",
+  //       comment: "Good value for the price.",
+  //     },
+  //   ],
+  // };
 
+  if (!productDetails) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <>
       <div className="product-details">
@@ -54,22 +74,29 @@ function ProductDetails() {
         <div className="product-main">
           <div className="product-image">
             <img
-              src={productDetails.image}
-              alt={productDetails.name}
+              src={productDetails?.images[0]}
+              alt={productDetails?.title}
               style={{ width: "300px", height: "300px", objectFit: "cover" }}
             />
           </div>
           <div className="product-info">
-            <h2>{productDetails.name}</h2>
+            <h2>{productDetails.title}</h2>
 
             <h3>${productDetails.price}</h3>
 
             <p>{productDetails.description}</p>
 
             <div className="quantity-selector">
-                <button className="quantity-btn" onClick={decreaseCount}>-</button>
-                <span className="quantity-value">{count}</span>
-                <button className="quantity-btn" onClick={()=>setCount(count+1)}>+</button>
+              <button className="quantity-btn" onClick={decreaseCount}>
+                -
+              </button>
+              <span className="quantity-value">{count}</span>
+              <button
+                className="quantity-btn"
+                onClick={() => setCount(count + 1)}
+              >
+                +
+              </button>
             </div>
 
             <button className="cart-btn">Add To Cart</button>
@@ -78,17 +105,47 @@ function ProductDetails() {
           </div>
         </div>
         <div className="product-comments">
-          <h2>Comments:</h2>
+          <div className="add-comment">
+            <h2>Comments:</h2>
+            <button
+              onClick={() => setAddCommentModel(true)}
+              className="add-comment-btn"
+            >
+              Add Comment
+            </button>
+          </div>
           <ul>
-            {productDetails.comments.map((comment) => (
-              <li key={comment.id}>
-                <strong>{comment.username}:</strong> {comment.comment}
+            {productDetails.reviews?.map((review, index) => (
+              <li key={index}>
+                <strong>{review.reviewerName}:</strong>
+                {review.comment}
               </li>
             ))}
           </ul>
         </div>
       </div>
       <ProductList search={search} category={category} sort={sort} />
+      {addCommentModel && (
+        <div className="modal-overlay">
+          <div className="add-comment-modal">
+            <form className="add-comment-form">
+              <h2>Add Comment</h2>
+              <label htmlFor="reviewerName">Name:</label>
+              <input
+                type="text"
+                id="reviewerName"
+                placeholder="Enter your name"
+              />
+              <label htmlFor="comment">Comment:</label>
+              <textarea id="comment" placeholder="Enter your comment" />
+              <button type="submit">Submit Comment</button>
+              <button type="button" onClick={() => setAddCommentModel(false)}>
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }

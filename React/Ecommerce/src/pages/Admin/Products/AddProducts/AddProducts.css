@@ -1,0 +1,124 @@
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width:35%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+
+}
+
+.add-product-form label {
+  font-weight: bold;
+}
+.add-product-form input{
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-product-form select {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-product-form textarea {
+  padding: 25px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.add-product-form button {
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.buttons-group{
+  display: flex;
+  gap: 10px;
+}
+
+.add-category-button{
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex:1
+}
+
+.add-category-button button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-category-button button:hover {
+  background-color: #0056b3;
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-category-modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.add-category-modal h2 {
+  margin-top: 0;
+}
+
+.add-category-modal input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons button:first-child {
+  background-color: #28a745;
+  color: white;
+}
+.modal-buttons button:first-child:hover {
+  background-color: #218838;
+}
+.modal-buttons button:last-child {
+  background-color: #dc3545;
+  color: white;
+}
+.modal-buttons button:last-child:hover {
+  background-color: #c82333;
+}
