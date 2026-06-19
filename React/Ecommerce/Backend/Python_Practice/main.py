@@ -1,10 +1,20 @@
-print("Hello world!")
+import pandas as pd
+import numpy as np
+import requests
 
-name='Dev'
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [25, 30, np.nan, 22, 35],
+    'Score': [85, 90, 78, np.nan, 95]
+}
 
-if name=='Deva':
-    print('Its dev')
+df = pd.DataFrame(data)
 
+request=requests.get('http://dummyjson.com/products',verify=False)
 
-for i in range(0,50,10):
-    print(i)
+data=request.json()
+
+for product in data['products']:
+    print(product['title'])
+
+print(data['products'][0]['title'])
