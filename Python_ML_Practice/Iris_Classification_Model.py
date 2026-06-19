@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
-    classification_report,
     precision_score,
     recall_score,
     f1_score
@@ -56,8 +55,6 @@ print("Accuracy:", accuracy)
 print("Precision:", precision)
 print("Recall:", recall)
 print("F1 Score:", f1)
-
-print(classification_report(y_test, y_pred))
 
 
 sample = [[5.1, 3.5, 1.4, 0.2]]
