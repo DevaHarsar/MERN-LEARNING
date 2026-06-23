@@ -12,6 +12,7 @@ import "./index.css";
 import ProductsPage from "./pages/Admin/Products/ProductsPage";
 import AddProducts from "./pages/Admin/Products/AddProducts/AddProducts";
 import EditProducts from "./pages/Admin/Products/EditProducts/EditProducts";
+import Carts from "./pages/Carts/Carts";
 
 function App() {
   return (
@@ -33,17 +34,29 @@ function App() {
                 </ProtectedRoutes>
               }
             />
-            <Route path="/admin/add-products" element={
-              <ProtectedRoutes>
-                <AddProducts/>
-              </ProtectedRoutes>
-            }
+            <Route
+              path="/admin/add-products"
+              element={
+                <ProtectedRoutes>
+                  <AddProducts />
+                </ProtectedRoutes>
+              }
             />
-            <Route path="/admin/products/:id/edit" element={
-              <ProtectedRoutes>
-                <EditProducts/>
-              </ProtectedRoutes>
-            }
+            <Route
+              path="/admin/products/:id/edit"
+              element={
+                <ProtectedRoutes>
+                  <EditProducts />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/cartPage"
+              element={
+                <ProtectedRoutes>
+                  <Carts />
+                </ProtectedRoutes>
+              }
             />
           </Route>
         </Routes>

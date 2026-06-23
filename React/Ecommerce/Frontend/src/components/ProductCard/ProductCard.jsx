@@ -1,8 +1,15 @@
 import "./ProductCard.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
+import { useSelector } from "react-redux";
 
 function ProductCard({ product, role }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const isInCart = cartItems.some((item) => item.id === product.id);
 
   return (
     <div
@@ -17,21 +24,35 @@ function ProductCard({ product, role }) {
       <h3 className="product-name">{product.title}</h3>
       <p className="product-category">Category:{product.category}</p>
       <p className="product-description">{product.description}</p>
-      <p className="product-price">${product.price}</p>
+      <p className="product-price">₹{product.price}</p>
       {role === "user" || role === undefined ? (
         <>
           <p className="product-stock">
-          {product.stock > 0 ? "In Stock" : "Out of Stock"}
+            {product.stock > 0 ? "In Stock" : "Out of Stock"}
           </p>
           <button
-            className="add-to-cart-button"
+            className={isInCart ? "go-to-cart-button" : "add-to-cart-button"}
             disabled={product.stock === 0}
             onClick={(e) => {
               e.stopPropagation();
-              console.log("Add to Cart");
+
+              if (role === undefined) {
+                navigate("/login");
+                return;
+              }
+
+              if (isInCart) {
+                navigate("/cartPage");
+              } else {
+                dispatch(addToCart({ ...product, quantity: 1 }));
+              }
             }}
           >
-            Add to Cart
+            {product.stock === 0
+              ? "Out of Stock"
+              : isInCart
+                ? "🛒 Go to Cart"
+                : "Add to Cart"}
           </button>
         </>
       ) : (

@@ -37,6 +37,20 @@
   min-height: 40px;
 }
 
+.go-to-cart-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #0056b3;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.go-to-cart-button:hover {
+  background: #003f7f;
+}
+
 .product-price {
   font-size: 20px;
   font-weight: bold;

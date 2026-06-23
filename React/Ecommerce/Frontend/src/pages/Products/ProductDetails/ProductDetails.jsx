@@ -7,9 +7,13 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../redux/cartSlice";
 
 function ProductDetails() {
   const [productDetails, setProductDetails] = useState(null);
+
+  const dispatch = useDispatch();
 
   const {isAuthenticated}=useContext(AuthContext);
   const navigate = useNavigate();
@@ -105,7 +109,9 @@ function ProductDetails() {
               </button>
             </div>
 
-            <button className="cart-btn">Add To Cart</button>
+            <button className="cart-btn" onClick={() => dispatch(addToCart({ ...productDetails, quantity: count }))}>
+              Add To Cart
+            </button>
 
             <button className="buy-btn">Buy Now</button>
           </div>

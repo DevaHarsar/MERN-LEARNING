@@ -5,9 +5,14 @@ import { useContext, useEffect } from "react";
 import { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 function Navbar() {
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
+
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -50,8 +55,15 @@ function Navbar() {
               <li onClick={() => navigate("/products")}>Products</li>
 
               {user?.role === "user" && (
-                <li onClick={() => navigate("/cart")} className="cart-button">
+                <li
+                  onClick={() => navigate("/cartPage")}
+                  className="cart-button"
+                >
                   <FontAwesomeIcon icon={faShoppingCart} />
+
+                  {cartCount > 0 && (
+                    <span className="cart-badge">{cartCount}</span>
+                  )}
                 </li>
               )}
 
