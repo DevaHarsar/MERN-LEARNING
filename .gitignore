@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 *.env
 .env
+
+task_agent_env/

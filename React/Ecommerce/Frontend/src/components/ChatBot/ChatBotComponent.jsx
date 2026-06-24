@@ -20,7 +20,6 @@ function ChatBotComponent() {
 
     const userMessage = message;
 
-    // Show user message immediately
     setMessages((prev) => [
       ...prev,
       {
