@@ -5,6 +5,7 @@ import {
   removeFromCart,
 } from "../../redux/cartSlice";
 import "./Carts.css";
+import { useNavigate } from "react-router-dom";
 function Carts() {
   const cartItems = useSelector((state) => state.cart.items);
 
@@ -14,6 +15,8 @@ function Carts() {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
+
+  const navigate = useNavigate();
 
   return (
     <div className="cart-page">
@@ -58,7 +61,9 @@ function Carts() {
       <div className="cart-total">
         <h2>Total: ₹{total.toFixed(2)}</h2>
 
-        <button className="checkout-btn">Proceed to Checkout</button>
+        <button className="checkout-btn" onClick={() => navigate("/checkout")}>
+          Proceed to Checkout
+        </button>
       </div>
     </div>
   );

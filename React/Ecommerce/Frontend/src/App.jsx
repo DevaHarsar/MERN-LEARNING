@@ -13,6 +13,7 @@ import ProductsPage from "./pages/Admin/Products/ProductsPage";
 import AddProducts from "./pages/Admin/Products/AddProducts/AddProducts";
 import EditProducts from "./pages/Admin/Products/EditProducts/EditProducts";
 import Carts from "./pages/Carts/Carts";
+import Checkout from "./pages/CheckOut/Checkout";
 
 function App() {
   return (
@@ -55,6 +56,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <Carts />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/checkout"
+              element={
+                <ProtectedRoutes>
+                  <Checkout />
                 </ProtectedRoutes>
               }
             />
