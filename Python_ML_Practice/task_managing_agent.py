@@ -118,6 +118,3 @@ while True:
     print("\nAgent:")
     print(response["messages"][-1].content)
                 
-
-    print("\nAgent:")
-    print(response["messages"][-1].content)

@@ -26,3 +26,5 @@ dist-ssr
 .env
 
 task_agent_env/
+Python_ML_Practice/customer_support_ai/venv/
+__pycache__
