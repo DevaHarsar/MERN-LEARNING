@@ -1,3 +1,8 @@
+from venv import logger
+
+from opentelemetry import context
+
+
 class RagChain:
      def __init__(self, retriever, llm, prompt):
         self.retriever = retriever
@@ -11,6 +16,8 @@ class RagChain:
         context = "\n\n".join(
             [doc.page_content for doc in docs]
         )
+        logger.info("Retrieved Context:")
+        logger.info(context)
 
         return context
      def create_prompt(self, context, question):

@@ -1,5 +1,6 @@
 import json
 from langchain_core.tools import tool
+from utils.logger import logger
 
 
 @tool
@@ -7,6 +8,8 @@ def check_order_status(order_id: str):
     """
     Check customer order status using order ID.
     """
+    
+    logger.info(f"Order Tool Called : {order_id}")
 
     with open("data/orders.json", "r") as file:
         orders = json.load(file)

@@ -10,5 +10,33 @@
     {
         "ticket_id": "0edd80f9",
         "issue": "order id ord123 not found, missing package"
+    },
+    {
+        "ticket_id": "27ec24bc",
+        "issue": "missing package for order ord123"
+    },
+    {
+        "ticket_id": "0407a994",
+        "issue": "order status not found for ord123"
+    },
+    {
+        "ticket_id": "4659b63e",
+        "issue": "missing package for order ord123"
+    },
+    {
+        "ticket_id": "a0618db5",
+        "issue": "order status not found for ord123"
+    },
+    {
+        "ticket_id": "17f6cc3c",
+        "issue": "order not found"
+    },
+    {
+        "ticket_id": "8d460272",
+        "issue": "return policy questions"
+    },
+    {
+        "ticket_id": "ff7c28b3",
+        "issue": "missing package for order ord123"
     }
 ]

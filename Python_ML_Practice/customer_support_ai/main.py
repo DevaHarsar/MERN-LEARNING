@@ -10,6 +10,7 @@ from rag.ragchain import RagChain
 from rag.prompt import PromptTemplate
 from tools.order_tools import check_order_status
 from tools.ticket_tools import create_ticket
+from utils.logger import logger
 
 embedding = EmbeddingModel().get_embedding_model()
 
@@ -51,8 +52,15 @@ rag_chain = RagChain(
 )
 
 question = "What is the return policy?"
+logger.info(f"User Query: {question}")
 
-answer = rag_chain.ask(question)
+try:
+
+    answer = rag_chain.ask(question)
+
+except Exception as e:
+
+    logger.exception(e)
 
 print("\nAnswer:\n")
 print(answer)

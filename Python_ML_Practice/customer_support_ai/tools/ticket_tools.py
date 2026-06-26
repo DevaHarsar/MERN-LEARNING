@@ -3,12 +3,15 @@ import uuid
 
 from langchain_core.tools import tool
 
+from utils.logger import logger
+
 
 @tool
 def create_ticket(issue: str):
     """
     Create a support ticket.
     """
+    logger.info(f"Creating Ticket : {issue}")
 
     with open("data/tickets.json","r") as file:
         tickets = json.load(file)
