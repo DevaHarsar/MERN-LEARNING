@@ -76,12 +76,12 @@ function Navbar() {
                   className="profile-section"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  <span>Welcome,{user?.name}</span>
+                  <span>Welcome,{user?.fullName?.firstName}</span>
                   {user?.avatar ? (
                     <img src={user.avatar} alt="avatar" className="avatar" />
                   ) : (
                     <div className="avatar-placeholder">
-                      {user?.name?.[0]?.toUpperCase()}
+                      {user?.fullName?.firstName?.charAt(0).toUpperCase()}
                     </div>
                   )}
                 </li>

@@ -1,19 +1,90 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 import "./SignUp.css";
 function SignUp() {
+  const navigate = useNavigate();
+  const { setUser, setIsAuthenticated } = useContext(AuthContext);
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/signup",
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        },
+      );
+
+      const { token, user: newUser } = response.data;
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("isAuthenticated", "true");
+
+      setUser(newUser);
+      setIsAuthenticated(true);
+
+      navigate("/");
+    } catch (error) {
+      alert(error.response?.data?.message || "Signup Failed");
+    }
+  };
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit} className="signup-form">
         <div className="form-group">
           <h1>Sign Up Form</h1>
-          <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Sign Up Icon" className="signup-icon"/>
-          <label htmlFor="username">Username:</label>
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"
+            alt="Sign Up Icon"
+            className="signup-icon"
+          />
+          <label>First Name</label>
+
           <input
             type="text"
-            id="username"
-            name="username"
-            placeholder="Username"
-            required
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                firstName: e.target.value,
+              })
+            }
+          />
+          <label>Last Name</label>
+
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                lastName: e.target.value,
+              })
+            }
           />
           <label htmlFor="email">Email:</label>
           <input
@@ -21,6 +92,13 @@ function SignUp() {
             id="email"
             name="email"
             placeholder="Email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                email: e.target.value,
+              })
+            }
             required
           />
           <label htmlFor="password">Password:</label>
@@ -29,14 +107,28 @@ function SignUp() {
             id="password"
             name="password"
             placeholder="Password"
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                password: e.target.value,
+              })
+            }
             required
           />
           <label htmlFor="confirmPassword">Confirm Password:</label>
           <input
-            type="text"
+            type="password"
             id="confirmPassword"
             name="confirmPassword"
             placeholder="Confirm password"
+            value={formData.confirmPassword}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                confirmPassword: e.target.value,
+              })
+            }
             required
           />
           <button type="submit">Sign Up</button>

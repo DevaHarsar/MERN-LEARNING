@@ -4,6 +4,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,50 +13,39 @@ function Login() {
     navigate(isAuthenticated ? "/" : "/login");
   }, []);
 
-  const { setIsAuthenticated, setUser, user} =
-    useContext(AuthContext);
+  const { setIsAuthenticated, setUser, user } = useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (user?.name === "admin" && user?.password === "admin") {
-      setUser({
-        name: "Admin",
-        email: "admin@gmail.com",
-        role: "admin",
-      });
-      localStorage.setItem(
-        
-        "user",
-        JSON.stringify({
-          name: "Admin",
-          email: "admin@gmail.com",
-          role: "admin",
-        }),
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email: user.email,
+          password: user.password,
+        },
       );
-      setIsAuthenticated(true);
+
+      const { token, user: loggedInUser } = response.data;
+
+      localStorage.setItem("token", token);
+
+      localStorage.setItem("user", JSON.stringify(loggedInUser));
+
       localStorage.setItem("isAuthenticated", "true");
-      navigate("/admin/dashboard");
-    } else if (user?.name === "dev" && user?.password === "dev") {
-      setUser({
-        name: "Deva",
-        email: "deva@gmail.com",
-        role: "user",
-      });
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          name: "Deva",
-          email: "deva@gmail.com",
-          role: "user",
-        }),
-      );
+
+      setUser(loggedInUser);
+
       setIsAuthenticated(true);
-      localStorage.setItem("isAuthenticated", "true");
-      navigate("/");
-    } else {
-      alert("Invalid Username or Password");
-      setIsAuthenticated(false);
+
+      if (loggedInUser.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Login Failed");
     }
   };
 
@@ -76,14 +66,14 @@ function Login() {
               </div>
 
               <div>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="email">Email:</label>
                 <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder="username"
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="email"
                   required
-                  onChange={(e) => setUser({ ...user, name: e.target.value })}
+                  onChange={(e) => setUser({ ...user, email: e.target.value })}
                 />
               </div>
 

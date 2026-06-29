@@ -1,16 +1,16 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.get("/", (req, res) => {
-    res.send("Welcome to Ecommerce Backend");
+  res.send("Welcome to Ecommerce Backend");
 });
 
-// Export app
-module.exports = app;
+app.use("/api/auth", authRoutes);
+
+export default app;
