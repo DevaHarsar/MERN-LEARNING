@@ -27,7 +27,7 @@ function SignUp() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
+        `${import.meta.env.VITE_API_URL}/auth/signup`,
         {
           firstName: formData.firstName,
           lastName: formData.lastName,

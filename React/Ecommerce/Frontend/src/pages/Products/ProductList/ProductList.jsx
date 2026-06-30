@@ -15,15 +15,21 @@ function ProductList({ search, category, sort }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://dummyjson.com/products");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
         console.log(response.data.products);
-        setProducts(response.data.products);
+        setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
     fetchProducts();
   }, []);
+
+  const handleDeleteProduct = (deletedId) => {
+  setProducts((prevProducts) =>
+    prevProducts.filter((product) => product._id !== deletedId)
+  );
+};
 
   // const products = [
   //   {
@@ -121,7 +127,7 @@ function ProductList({ search, category, sort }) {
       {/* <h1 className="heading-products">Products List</h1> */}
       <div className="product-list">
         {filteredProducts.map((product) => {
-          return <ProductCard key={product.id} product={product} role={role} />;
+          return <ProductCard key={product._id} product={product} role={role} onDelete={handleDeleteProduct} />;
         })}
       </div>
     </>

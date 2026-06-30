@@ -29,9 +29,7 @@ function ProductDetails() {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(
-          `https://dummyjson.com/products/${id}`,
-        );
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
         console.log(response.data);
         setProductDetails(response.data);
       } catch (error) {
@@ -92,7 +90,7 @@ function ProductDetails() {
           <div className="product-info">
             <h2>{productDetails.title}</h2>
 
-            <h3>${productDetails.price}</h3>
+            <h3>₹{productDetails.price}</h3>
 
             <p>{productDetails.description}</p>
 
