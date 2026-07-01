@@ -7,27 +7,15 @@ function EditProducts() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const categories = [
-    "smartphones",
-    "laptops",
-    "headphones",
-    "smartwatches",
-    "footwear",
-    "mens-clothing",
-    "womens-clothing",
-    "gaming",
-    "televisions",
-    "kitchen",
-    "furniture",
-  ];
-
   const [product, setProduct] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/products/${id}`
+          `${import.meta.env.VITE_API_URL}/products/${id}`,
         );
 
         setProduct(response.data);
@@ -36,40 +24,69 @@ function EditProducts() {
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/categories`,
+        );
+        setCategories(response.data);
+        console.log("Fetched categories:", response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
     fetchProduct();
+    fetchCategories();
   }, [id]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
 
-    setProduct((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "image") {
+      setSelectedImage(files[0]);
+    } else {
+      setProduct((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const updatedProduct = {
-        ...product,
-        price: Number(product.price),
-        stock: Number(product.stock),
-        discountPercentage: Number(product.discountPercentage),
-        images: [product.thumbnail],
-      };
+      const formData = new FormData();
 
-      const response = await axios.put(
+      formData.append("title", product.title);
+      formData.append("description", product.description);
+      formData.append("category", product.category);
+      formData.append("price", product.price);
+      formData.append("discountPercentage", product.discountPercentage);
+      formData.append("stock", product.stock);
+      formData.append("brand", product.brand);
+
+      if (selectedImage) {
+        formData.append("image", selectedImage);
+      }
+
+      const token = localStorage.getItem("token");
+
+      await axios.put(
         `${import.meta.env.VITE_API_URL}/products/${id}`,
-        updatedProduct
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
-
-      console.log(response.data);
 
       alert("Product Updated Successfully");
 
-      navigate("/products");
+      navigate("/admin/products");
     } catch (error) {
       console.error(error);
       alert("Failed to update product");
@@ -108,6 +125,7 @@ function EditProducts() {
           name="price"
           value={product.price}
           onChange={handleChange}
+          onWheel={(e) => e.target.blur()}
           required
         />
 
@@ -117,17 +135,26 @@ function EditProducts() {
           name="discountPercentage"
           value={product.discountPercentage}
           onChange={handleChange}
+          onWheel={(e) => e.target.blur()}
         />
 
-        <label>Image URL</label>
+        <label>Product Image</label>
+
         <input
-          type="text"
-          name="thumbnail"
-          value={product.thumbnail}
+          type="file"
+          name="image"
+          accept="image/*"
           onChange={handleChange}
-          required
         />
-
+        <img
+          src={
+            selectedImage
+              ? URL.createObjectURL(selectedImage)
+              : product.thumbnail
+          }
+          alt="Preview"
+          width="150"
+        />
         <label>Description</label>
         <textarea
           name="description"
@@ -143,8 +170,8 @@ function EditProducts() {
           onChange={handleChange}
         >
           {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
+            <option key={category._id} value={category.name.toLowerCase()}>
+              {category.name}
             </option>
           ))}
         </select>
@@ -156,6 +183,7 @@ function EditProducts() {
           value={product.stock}
           onChange={handleChange}
           required
+          onWheel={(e) => e.target.blur()}
         />
 
         <button type="submit">Update Product</button>

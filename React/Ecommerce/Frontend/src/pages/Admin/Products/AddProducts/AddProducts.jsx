@@ -1,75 +1,98 @@
 import "./AddProducts.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AddProducts() {
-  const categories = [
-    "smartphones",
-    "laptops",
-    "headphones",
-    "smartwatches",
-    "footwear",
-    "mens-clothing",
-    "womens-clothing",
-    "gaming",
-    "televisions",
-    "kitchen",
-    "furniture",
-  ];
-
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/categories`,
+        );
+        setCategories(response.data);
+        console.log("Fetched categories:", response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const [product, setProduct] = useState({
     title: "",
     description: "",
-    category: categories[0],
+    category: "",
     price: "",
     discountPercentage: 0,
     stock: "",
     brand: "",
-    thumbnail: "",
+    image: null,
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files } = e.target;
 
-    setProduct((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "image") {
+      setProduct((prev) => ({
+        ...prev,
+        image: files[0],
+      }));
+    } else {
+      setProduct((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const productData = {
-        ...product,
-        price: Number(product.price),
-        stock: Number(product.stock),
-        discountPercentage: Number(product.discountPercentage),
-        rating: 0,
-        images: [product.thumbnail],
-      };
+      const formData = new FormData();
+
+      formData.append("title", product.title);
+      formData.append("description", product.description);
+      formData.append("category", product.category);
+      formData.append("price", product.price);
+      formData.append("discountPercentage", product.discountPercentage);
+      formData.append("stock", product.stock);
+      formData.append("brand", product.brand);
+
+      formData.append("image", product.image);
+
+      const token = localStorage.getItem("token");
 
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/products`,
-        productData,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
 
       console.log(response.data);
 
       alert("Product Added Successfully");
+      navigate("/admin/products");
 
       setProduct({
         title: "",
         description: "",
-        category: categories[0],
+        category: "",
         price: "",
         discountPercentage: 0,
         stock: "",
         brand: "",
-        thumbnail: "",
+        image: null,
       });
     } catch (error) {
       console.error(error);
@@ -117,6 +140,7 @@ function AddProducts() {
           name="price"
           value={product.price}
           onChange={handleChange}
+          onWheel={(e) => e.target.blur()}
           required
         />
 
@@ -126,16 +150,39 @@ function AddProducts() {
           name="discountPercentage"
           value={product.discountPercentage}
           onChange={handleChange}
+          onWheel={(e) => e.target.blur()}
         />
 
-        <label>Thumbnail URL</label>
+        <label>Image</label>
         <input
-          type="text"
-          name="thumbnail"
-          value={product.thumbnail}
+          type="file"
+          accept="image/*"
+          name="image"
           onChange={handleChange}
           required
         />
+        {product.image && (
+          <div className="image-preview-container">
+            <img
+              src={URL.createObjectURL(product.image)}
+              alt="Preview"
+              className="image-preview"
+            />
+
+            <button
+              type="button"
+              className="remove-image-btn"
+              onClick={() =>
+                setProduct((prev) => ({
+                  ...prev,
+                  image: null,
+                }))
+              }
+            >
+              ×
+            </button>
+          </div>
+        )}
 
         <label>Description</label>
         <textarea
@@ -150,10 +197,12 @@ function AddProducts() {
           name="category"
           value={product.category}
           onChange={handleChange}
+          required
         >
+          <option value="">Select a category</option>
           {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
+            <option key={category._id} value={category.name.toLowerCase()}>
+              {category.name}
             </option>
           ))}
         </select>
@@ -164,6 +213,7 @@ function AddProducts() {
           name="stock"
           value={product.stock}
           onChange={handleChange}
+          onWheel={(e) => e.target.blur()}
           required
         />
 

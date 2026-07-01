@@ -14,6 +14,8 @@ import AddProducts from "./pages/Admin/Products/AddProducts/AddProducts";
 import EditProducts from "./pages/Admin/Products/EditProducts/EditProducts";
 import Carts from "./pages/Carts/Carts";
 import Checkout from "./pages/CheckOut/Checkout";
+import AdminProtectedRoutes from "./ProtectedRoutes/AdminProtectedRoutes";
+import AdminProductPage from "./pages/Admin/Products/AdminProductPage/AdminProductPage";
 
 function App() {
   return (
@@ -30,25 +32,33 @@ function App() {
             <Route
               path="/admin/*"
               element={
-                <ProtectedRoutes>
+                <AdminProtectedRoutes>
                   <Dashboard />
-                </ProtectedRoutes>
+                </AdminProtectedRoutes>
+              }
+            />
+            <Route
+              path="/admin/products"
+              element={
+                <AdminProtectedRoutes>
+                  <AdminProductPage />
+                </AdminProtectedRoutes>
               }
             />
             <Route
               path="/admin/add-products"
               element={
-                <ProtectedRoutes>
+                <AdminProtectedRoutes>
                   <AddProducts />
-                </ProtectedRoutes>
+                </AdminProtectedRoutes>
               }
             />
             <Route
               path="/admin/products/:id/edit"
               element={
-                <ProtectedRoutes>
+                <AdminProtectedRoutes>
                   <EditProducts />
-                </ProtectedRoutes>
+                </AdminProtectedRoutes>
               }
             />
             <Route
@@ -67,6 +77,7 @@ function App() {
                 </ProtectedRoutes>
               }
             />
+            <Route path="*" element={<Home />} />
           </Route>
         </Routes>
       </BrowserRouter>

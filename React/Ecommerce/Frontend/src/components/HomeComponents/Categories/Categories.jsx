@@ -9,12 +9,18 @@ function Categories({ category, setCategory }) {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "https://dummyjson.com/products/category-list",
+          `${import.meta.env.VITE_API_URL}/categories`,
         );
 
         console.log(response.data);
 
-        setCategories(["All", ...response.data]);
+        setCategories([
+          {
+            _id: "all",
+            name: "All",
+          },
+          ...response.data,
+        ]);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -34,11 +40,13 @@ function Categories({ category, setCategory }) {
     <div className="categories">
       {categories.map((cat) => (
         <button
-          key={cat}
+          key={cat._id}
           className="category-btn"
-          onClick={() => setCategory(cat)}
+          onClick={() =>
+            setCategory(cat.name === "All" ? "all" : cat.name.toLowerCase())
+          }
         >
-          {cat}
+          {cat.name}
         </button>
       ))}
     </div>

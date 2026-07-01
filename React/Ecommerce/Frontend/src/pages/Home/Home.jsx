@@ -7,7 +7,7 @@ import FilterAndSortComponent from "../../components/HomeComponents/FilterAndSor
 import { useEffect, useState } from "react";
 function Home() {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("");
   useEffect(() => {
     window.scrollTo(0, 0);

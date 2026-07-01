@@ -23,7 +23,7 @@ export const registerUser = async (userData) => {
     password: hashedPassword,
   });
 
-  const token = generateToken(newUser._id);
+  const token = generateToken(newUser._id,newUser.role);
 
   const userResponse = newUser.toObject();
   delete userResponse.password;
@@ -49,7 +49,7 @@ export const loginUser = async (userData) => {
     throw new Error("Invalid Credentials");
   }
 
-  const token = generateToken(user._id);
+  const token = generateToken(user._id,user.role);
   const userResponse = user.toObject();
   delete userResponse.password;
 

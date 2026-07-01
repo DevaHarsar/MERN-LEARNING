@@ -6,7 +6,7 @@ import { useState } from "react";
 
 function ProductsPage() {
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("");
   return (
     <>

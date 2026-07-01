@@ -52,7 +52,7 @@ function Navbar() {
         <div className="nav-btns">
           {isLoggedIn ? (
             <>
-              <li onClick={() => navigate("/products")}>Products</li>
+              <li onClick={() => navigate(user?.role === "admin" ? "/admin/products" : "/products")}>Products</li>
 
               {user?.role === "user" && (
                 <li

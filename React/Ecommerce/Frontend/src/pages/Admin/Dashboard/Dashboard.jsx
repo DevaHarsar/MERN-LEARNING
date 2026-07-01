@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-    const [category, setCategory] = useState("All");
+    const [category, setCategory] = useState("all");
     const [sort, setSort] = useState("");
   const dashboardData = [
     {
