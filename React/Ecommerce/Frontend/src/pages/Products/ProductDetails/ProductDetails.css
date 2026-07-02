@@ -166,12 +166,185 @@
   border-radius: 4px;
 } 
 
-@media (max-width: 768px) {
+/* ==========================
+   Tablet
+========================== */
+
+@media (max-width: 992px) {
+
+  .product-details {
+    padding: 20px;
+  }
+
   .product-main {
-    flex-direction: column;
+    gap: 25px;
   }
 
   .product-image img {
-    max-width: 100%;
+    max-width: 320px;
+    margin: auto;
+  }
+
+  .product-info h2 {
+    font-size: 28px;
+  }
+
+  .cart-btn,
+  .buy-btn {
+    width: 180px;
+  }
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media (max-width: 768px) {
+
+  .product-details {
+    padding: 15px;
+  }
+
+  .product-main {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .product-image {
+    display: flex;
+    justify-content: center;
+  }
+
+  .product-image img {
+    max-width: 250px;
+  }
+
+  .product-info {
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-info h2 {
+    font-size: 24px;
+  }
+
+  .product-info h3 {
+    font-size: 22px;
+  }
+
+  .product-info p {
+    font-size: 15px;
+  }
+
+  .quantity-selector {
+    justify-content: center;
+  }
+
+  .quantity-selector button {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+
+  .cart-btn,
+  .buy-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .add-comment {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .add-comment-btn {
+    width: 100%;
+  }
+
+  .product-comments {
+    padding: 20px;
+  }
+
+  .product-comments li {
+    padding: 12px;
+  }
+
+  .add-comment-form {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .add-comment-form input,
+  .add-comment-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .add-comment-form button {
+    width: 100%;
+  }
+}
+
+/* ==========================
+   Small Phones
+========================== */
+
+@media (max-width: 480px) {
+
+  .product-details h1 {
+    text-align: center;
+    font-size: 26px;
+  }
+
+  .product-main {
+    padding: 15px;
+  }
+
+  .product-image img {
+    max-width: 200px;
+  }
+
+  .product-info h2 {
+    font-size: 20px;
+  }
+
+  .product-info h3 {
+    font-size: 18px;
+  }
+
+  .product-info p {
+    font-size: 14px;
+  }
+
+  .quantity-selector button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .quantity-selector span {
+    width: 30px;
+    font-size: 16px;
+  }
+
+  .cart-btn,
+  .buy-btn {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .product-comments {
+    padding: 15px;
+  }
+
+  .product-comments h2 {
+    font-size: 20px;
+  }
+
+  .add-comment-form {
+    padding: 15px;
   }
 }

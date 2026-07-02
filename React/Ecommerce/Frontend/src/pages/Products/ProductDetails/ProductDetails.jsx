@@ -8,16 +8,16 @@ import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/cartSlice";
+import { setCart } from "../../../redux/cartSlice";
+import { addToCart } from "../../../service/cartService";
 
 function ProductDetails() {
   const [productDetails, setProductDetails] = useState(null);
 
   const dispatch = useDispatch();
 
-  const {isAuthenticated}=useContext(AuthContext);
+  const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-
 
   const [search] = useState("");
   const [category] = useState("All");
@@ -29,7 +29,9 @@ function ProductDetails() {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/products/${id}`,
+        );
         console.log(response.data);
         setProductDetails(response.data);
       } catch (error) {
@@ -51,6 +53,23 @@ function ProductDetails() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
+
+  const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await addToCart(token, productDetails._id, count);
+
+      dispatch(setCart(response.data));
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   // const productDetails = {
   //   id: params.id,
@@ -82,10 +101,7 @@ function ProductDetails() {
         <h1>Product Details</h1>
         <div className="product-main">
           <div className="product-image">
-            <img
-              src={productDetails?.images[0]}
-              alt={productDetails?.title}
-            />
+            <img src={productDetails?.images[0]} alt={productDetails?.title} />
           </div>
           <div className="product-info">
             <h2>{productDetails.title}</h2>
@@ -107,7 +123,7 @@ function ProductDetails() {
               </button>
             </div>
 
-            <button className="cart-btn" onClick={() => dispatch(addToCart({ ...productDetails, quantity: count }))}>
+            <button className="cart-btn" onClick={handleAddToCart}>
               Add To Cart
             </button>
 
@@ -118,7 +134,9 @@ function ProductDetails() {
           <div className="add-comment">
             <h2>Comments:</h2>
             <button
-              onClick={() => isAuthenticated ? setAddCommentModel(true):navigate("/login")}
+              onClick={() =>
+                isAuthenticated ? setAddCommentModel(true) : navigate("/login")
+              }
               className="add-comment-btn"
             >
               Add Comment

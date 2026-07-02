@@ -6,11 +6,16 @@ import { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setCart } from "../../redux/cartSlice";
+import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 function Navbar() {
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
 
   const cartItems = useSelector((state) => state.cart.items);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -35,6 +40,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const logout = () => {
+    dispatch(setCart({ items: [] }));
     setIsAuthenticated(false);
     setUser(null);
     localStorage.removeItem("isAuthenticated");
@@ -49,14 +55,28 @@ function Navbar() {
         <div>
           <h1 onClick={() => navigate("/")}>Dev Super Mart</h1>
         </div>
-        <div className="nav-btns">
+        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} />
+        </button>
+        <div className={`nav-btns ${menuOpen ? "active" : ""}`}>
           {isLoggedIn ? (
             <>
-              <li onClick={() => navigate(user?.role === "admin" ? "/admin/products" : "/products")}>Products</li>
+              <li
+                onClick={() =>{
+                  navigate(
+                    user?.role === "admin" ? "/admin/products" : "/products",
+                  )
+                  setMenuOpen(false);
+                }
+
+                }
+              >
+                Products
+              </li>
 
               {user?.role === "user" && (
                 <li
-                  onClick={() => navigate("/cartPage")}
+                  onClick={() =>{setMenuOpen(false); navigate("/cartPage")}}
                   className="cart-button"
                 >
                   <FontAwesomeIcon icon={faShoppingCart} />
@@ -68,13 +88,13 @@ function Navbar() {
               )}
 
               {user?.role === "admin" && (
-                <li onClick={() => navigate("/admin/dashboard")}>Dashboard</li>
+                <li onClick={() => { setMenuOpen(false); navigate("/admin/dashboard"); }}>Dashboard</li>
               )}
 
               <div className="profile-container" ref={dropdownRef}>
                 <li
                   className="profile-section"
-                  onClick={() => setShowDropdown(!showDropdown)}
+                  onClick={() => {setShowDropdown(!showDropdown); }}
                 >
                   <span>Welcome,{user?.fullName?.firstName}</span>
                   {user?.avatar ? (
@@ -88,20 +108,20 @@ function Navbar() {
 
                 {showDropdown && (
                   <div className="dropdown-menu">
-                    <button onClick={() => navigate("/profile")}>
+                    <button onClick={() => { setMenuOpen(false); navigate("/profile"); }}>
                       Profile
                     </button>
 
-                    <button onClick={logout}>Logout</button>
+                    <button onClick={() => { setMenuOpen(false); logout(); }}>Logout</button>
                   </div>
                 )}
               </div>
             </>
           ) : (
             <>
-              <li onClick={() => navigate("/login")}>Login</li>
+              <li onClick={() => { setMenuOpen(false); navigate("/login"); }}>Login</li>
 
-              <li onClick={() => navigate("/signup")}>Sign Up</li>
+              <li onClick={() => { setMenuOpen(false); navigate("/signup"); }}>Sign Up</li>
             </>
           )}
         </div>

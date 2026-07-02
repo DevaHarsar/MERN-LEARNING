@@ -1,70 +1,161 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setCart } from "../../redux/cartSlice";
 import {
-  incrementQuantity,
-  decrementQuantity,
-  removeFromCart,
-} from "../../redux/cartSlice";
-import "./Carts.css";
+  getCart,
+  updateCart,
+  removeCartItem,
+} from "../../service/cartService";
 import { useNavigate } from "react-router-dom";
+import "./Carts.css";
+
 function Carts() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const cartItems = useSelector((state) => state.cart.items);
 
-  const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+
+  const loadCart = async () => {
+    try {
+      const response = await getCart(token);
+      dispatch(setCart(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadCart();
+  }, []);
+
+  const handleIncrement = async (item) => {
+    try {
+      await updateCart(
+        token,
+        item.product._id,
+        item.quantity + 1
+      );
+
+      loadCart();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDecrement = async (item) => {
+    if (item.quantity === 1) return;
+
+    try {
+      await updateCart(
+        token,
+        item.product._id,
+        item.quantity - 1
+      );
+
+      loadCart();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRemove = async (item) => {
+    try {
+      await removeCartItem(token, item.product._id);
+
+      loadCart();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
   );
-
-  const navigate = useNavigate();
 
   return (
     <div className="cart-page">
       <h1>Shopping Cart</h1>
 
-      {cartItems.map((item) => (
-        <div key={item.id} className="cart-item">
-          <img src={item.images[0]} alt={item.title} />
+      {cartItems.length === 0 ? (
+        <h2>Your cart is empty</h2>
+      ) : (
+        <>
+          {cartItems.map((item) => (
+            <div
+              key={item.product._id}
+              className="cart-item"
+            >
+              <img
+                src={item.product.images[0]}
+                alt={item.product.title}
+              />
 
-          <div className="cart-details">
-            <h3>{item.title}</h3>
-            <p className="price">₹{item.price}</p>
+              <div className="cart-details">
+                <h3>{item.product.title}</h3>
 
-            <div className="quantity-controls">
-              <button onClick={() => dispatch(decrementQuantity(item.id))}>
-                -
-              </button>
+                <p className="price">
+                  ₹{item.product.price}
+                </p>
 
-              <span>{item.quantity}</span>
+                <div className="quantity-controls">
+                  <button
+                    onClick={() =>
+                      handleDecrement(item)
+                    }
+                  >
+                    -
+                  </button>
 
-              <button onClick={() => dispatch(incrementQuantity(item.id))}>
-                +
-              </button>
+                  <span>{item.quantity}</span>
+
+                  <button
+                    onClick={() =>
+                      handleIncrement(item)
+                    }
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div className="cart-actions">
+                <p className="subtotal">
+                  ₹
+                  {(
+                    item.product.price *
+                    item.quantity
+                  ).toFixed(2)}
+                </p>
+
+                <button
+                  className="remove-btn"
+                  onClick={() =>
+                    handleRemove(item)
+                  }
+                >
+                  Remove
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
 
-          <div className="cart-actions">
-            <p className="subtotal">
-              ₹{(item.price * item.quantity).toFixed(2)}
-            </p>
+          <div className="cart-total">
+            <h2>Total: ₹{total.toFixed(2)}</h2>
 
             <button
-              className="remove-btn"
-              onClick={() => dispatch(removeFromCart(item.id))}
+              className="checkout-btn"
+              onClick={() =>
+                navigate("/checkout")
+              }
             >
-              Remove
+              Proceed to Checkout
             </button>
           </div>
-        </div>
-      ))}
-
-      <div className="cart-total">
-        <h2>Total: ₹{total.toFixed(2)}</h2>
-
-        <button className="checkout-btn" onClick={() => navigate("/checkout")}>
-          Proceed to Checkout
-        </button>
-      </div>
+        </>
+      )}
     </div>
   );
 }

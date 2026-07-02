@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useContext } from "react";
 import axios from "axios";
+import { getCart } from "../../../service/cartService";
+import { useDispatch } from "react-redux";
+import { setCart } from "../../../redux/cartSlice";
 
 function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
@@ -34,6 +38,16 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(loggedInUser));
 
       localStorage.setItem("isAuthenticated", "true");
+
+      const cartResponse = await getCart(token);
+
+      dispatch(
+        setCart(
+          cartResponse.data || {
+            items: [],
+          },
+        ),
+      );
 
       setUser(loggedInUser);
 

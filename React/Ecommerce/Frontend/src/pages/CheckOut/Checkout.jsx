@@ -1,9 +1,54 @@
 import { useSelector } from "react-redux";
 import "./Checkout.css";
+import { useDispatch } from "react-redux";
+import { getCart } from "../../service/cartService";
+import { setCart } from "../../redux/cartSlice";
+import { useEffect } from "react";
 
 function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const fetchCart = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await getCart(token);
+          dispatch(
+            setCart(
+              response.data || {
+                items: [],
+              },
+            ),
+          );
+        } catch (error) {
+          console.error("Error fetching cart:", error);
+        }
+      }
+    };
+    fetchCart();
+  }, []);
+
+  const subTotal = cartItems.reduce(
+    (total, item) => total + item.product.price * item.quantity,
+    0,
+  );
+
+  const discount = cartItems.reduce(
+    (total, item) =>
+      total +
+      (item.product.price * item.quantity * (item.product.discount ?? 0)) / 100,
+    0,
+  );
+
+  const taxableAmount = subTotal - discount;
+
+  const tax = taxableAmount * 0.1; // 10%
+
+  const shipping = 0;
+
+  const total = taxableAmount + tax + shipping;
   return (
     <>
       <h1 className="checkout-page h1">Checkout</h1>
@@ -26,34 +71,46 @@ function Checkout() {
           <h2>Order Summary</h2>
           <div className="checkout-items">
             {cartItems.map((item) => (
-              <div key={item.id} className="checkout-item">
-                <img src={item.images[0]} alt={item.title} />
-                <p>{item.title}</p>
+              <div key={item.product._id} className="checkout-item">
+                <img src={item.product.images?.[0]} alt={item.product.title} />
+
+                <p>{item.product.title}</p>
+
                 <p>
-                  ₹{item.price} x {item.quantity}
+                  ₹{item.product.price} × {item.quantity}
                 </p>
               </div>
             ))}
           </div>
-          <p>
-            subTotal: ₹
-            {cartItems
-              .reduce((total, item) => total + item.price * item.quantity, 0)
-              .toFixed(2)}
-          </p>
-          <p>Shipping: ₹0.00</p>
-          <p>Tax: ₹0.00</p>
-          <p>Discount: ₹0.00</p>
+          <div className="summary-row">
+            <span>Subtotal</span>
+            <span>₹{subTotal.toFixed(2)}</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Shipping</span>
+            <span>₹{shipping.toFixed(2)}</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Tax</span>
+            <span>₹{tax.toFixed(2)}</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Discount</span>
+            <span>-₹{discount.toFixed(2)}</span>
+          </div>
+
           <hr />
-          <p>
-            Total: ₹
-            {cartItems
-              .reduce((total, item) => total + item.price * item.quantity, 0)
-              .toFixed(2)}
-          </p>
+
+          <div className="summary-row total-row">
+            <span>Total</span>
+            <span>₹{total.toFixed(2)}</span>
+          </div>
         </div>
       </div>
-          <button className="place-order-btn">Place Order</button>
+      <button className="place-order-btn">Place Order</button>
     </>
   );
 }
