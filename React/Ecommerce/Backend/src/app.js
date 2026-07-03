@@ -13,7 +13,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://dev-super-mart-rho.vercel.app/api",
+      "https://dev-super-mart-rho.vercel.app",
     ],
     credentials: true,
   })
