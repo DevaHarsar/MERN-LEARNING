@@ -9,7 +9,15 @@ import dashboardRoutes from "./routes/dashboard.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://dev-super-mart-rho.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
