@@ -140,3 +140,31 @@
   font-weight: bold;
   margin-top: 15px;
 }
+
+.payment-section {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-section label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.payment-section select {
+  padding: 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.payment-section select:focus {
+  outline: none;
+  border-color: #9486ff;
+}

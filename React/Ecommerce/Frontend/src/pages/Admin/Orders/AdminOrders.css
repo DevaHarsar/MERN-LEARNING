@@ -1,0 +1,148 @@
+.admin-orders {
+  padding: 20px;
+}
+
+.admin-orders h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.admin-orders table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.admin-orders th,
+.admin-orders td {
+  padding: 12px 16px;
+  text-align: left;
+  border: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.admin-orders th {
+  background: #f5f5f5;
+  color: #333;
+  font-weight: 600;
+}
+
+.admin-orders tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.admin-orders tbody tr:hover {
+  background: #f3f3f3;
+}
+
+
+.paid,
+.pending,
+.failed,
+.refunded {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.paid {
+  background: #d4edda;
+  color: #155724;
+}
+
+.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.failed {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.refunded {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status.placed {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.confirmed {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status.packed {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.status.shipped {
+  background: #cffafe;
+  color: #0f766e;
+}
+
+.status.out-for-delivery {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.status.delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.admin-orders button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-orders select {
+  width: 160px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  font-size: 14px;
+}
+
+.admin-orders select:focus {
+  outline: none;
+  border-color: #666;
+}
+
+
+@media (max-width: 992px) {
+  .admin-orders {
+    overflow-x: auto;
+  }
+
+  .admin-orders table {
+    min-width: 950px;
+  }
+}

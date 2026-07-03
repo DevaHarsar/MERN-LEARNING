@@ -16,6 +16,10 @@ import Carts from "./pages/Carts/Carts";
 import Checkout from "./pages/CheckOut/Checkout";
 import AdminProtectedRoutes from "./ProtectedRoutes/AdminProtectedRoutes";
 import AdminProductPage from "./pages/Admin/Products/AdminProductPage/AdminProductPage";
+import OrderList from "./pages/Orders/OrderList/OrderList";
+import OrderDetails from "./pages/Orders/OrderDetails/OrderDetails";
+import AdminOrders from "./pages/Admin/Orders/AdminOrders";
+import AdminOrderDetails from "./pages/Admin/Orders/AdminOrderDetails";
 
 function App() {
   return (
@@ -75,6 +79,38 @@ function App() {
                 <ProtectedRoutes>
                   <Checkout />
                 </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <ProtectedRoutes>
+                  <OrderList />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/orders/:id"
+              element={
+                <ProtectedRoutes>
+                  <OrderDetails />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/admin/orders"
+              element={
+                <AdminProtectedRoutes>
+                  <AdminOrders />
+                </AdminProtectedRoutes>
+              }
+            />
+            <Route
+              path="/admin/orders/:id"
+              element={
+                <AdminProtectedRoutes>
+                  <AdminOrderDetails />
+                </AdminProtectedRoutes>
               }
             />
             <Route path="*" element={<Home />} />

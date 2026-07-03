@@ -45,6 +45,7 @@ function Navbar() {
     setUser(null);
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setShowDropdown(false);
     navigate("/login");
   };
@@ -62,21 +63,22 @@ function Navbar() {
           {isLoggedIn ? (
             <>
               <li
-                onClick={() =>{
+                onClick={() => {
                   navigate(
                     user?.role === "admin" ? "/admin/products" : "/products",
-                  )
+                  );
                   setMenuOpen(false);
-                }
-
-                }
+                }}
               >
                 Products
               </li>
 
               {user?.role === "user" && (
                 <li
-                  onClick={() =>{setMenuOpen(false); navigate("/cartPage")}}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    navigate("/cartPage");
+                  }}
                   className="cart-button"
                 >
                   <FontAwesomeIcon icon={faShoppingCart} />
@@ -88,13 +90,22 @@ function Navbar() {
               )}
 
               {user?.role === "admin" && (
-                <li onClick={() => { setMenuOpen(false); navigate("/admin/dashboard"); }}>Dashboard</li>
+                <li
+                  onClick={() => {
+                    setMenuOpen(false);
+                    navigate("/admin/dashboard");
+                  }}
+                >
+                  Dashboard
+                </li>
               )}
 
               <div className="profile-container" ref={dropdownRef}>
                 <li
                   className="profile-section"
-                  onClick={() => {setShowDropdown(!showDropdown); }}
+                  onClick={() => {
+                    setShowDropdown(!showDropdown);
+                  }}
                 >
                   <span>Welcome,{user?.fullName?.firstName}</span>
                   {user?.avatar ? (
@@ -108,20 +119,65 @@ function Navbar() {
 
                 {showDropdown && (
                   <div className="dropdown-menu">
-                    <button onClick={() => { setMenuOpen(false); navigate("/profile"); }}>
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        navigate("/profile");
+                      }}
+                    >
                       Profile
                     </button>
-
-                    <button onClick={() => { setMenuOpen(false); logout(); }}>Logout</button>
+                    {user?.role === "admin" && (
+                      <button
+                        onClick={() => {
+                          setMenuOpen(false);
+                          navigate("/admin/orders");
+                        }}
+                      >
+                        Orders
+                      </button>
+                    )}
+                    {user.role === "user" && (
+                      <button
+                        onClick={() => {
+                          setMenuOpen(false);
+                          navigate("/orders");
+                        }}
+                      >
+                        My Orders
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        setMenuOpen(false);
+                        logout();
+                      }}
+                    >
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>
             </>
           ) : (
             <>
-              <li onClick={() => { setMenuOpen(false); navigate("/login"); }}>Login</li>
+              <li
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/login");
+                }}
+              >
+                Login
+              </li>
 
-              <li onClick={() => { setMenuOpen(false); navigate("/signup"); }}>Sign Up</li>
+              <li
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/signup");
+                }}
+              >
+                Sign Up
+              </li>
             </>
           )}
         </div>

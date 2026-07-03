@@ -6,22 +6,27 @@ import { useNavigate } from "react-router-dom";
 function AddProducts() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [newCategoryName, setNewCategoryName] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/categories`,
-        );
-        setCategories(response.data);
-        console.log("Fetched categories:", response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  useEffect(
+    () => {
+      const fetchCategories = async () => {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}/categories`,
+          );
+          setCategories(response.data);
+          console.log("Fetched categories:", response.data);
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+      };
+      fetchCategories();
+    },
+    [],
+    categories,
+  );
 
   const [product, setProduct] = useState({
     title: "",
@@ -100,6 +105,35 @@ function AddProducts() {
     }
   };
 
+  const addCategory = async (name) => {
+    if (!name.trim()) {
+      alert("Category name is required");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/categories`,
+        {
+          name: name.trim(),
+        },
+      );
+
+      setCategories((prev) => [...prev, response.data]);
+
+      setProduct((prev) => ({
+        ...prev,
+        category: response.data.name.toLowerCase(),
+      }));
+
+      setNewCategoryName("");
+      setShowCategoryModal(false);
+
+      alert("Category added successfully");
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to add category");
+    }
+  };
   return (
     <div className="add-products-container">
       <div className="add-category-button">
@@ -225,10 +259,15 @@ function AddProducts() {
           <div className="add-category-modal">
             <h2>Add New Category</h2>
 
-            <input type="text" placeholder="Category Name" />
+            <input
+              type="text"
+              placeholder="Category Name"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+            />
 
             <div className="modal-buttons">
-              <button>Add</button>
+              <button onClick={() => addCategory(newCategoryName)}>Add</button>
 
               <button onClick={() => setShowCategoryModal(false)}>
                 Cancel

@@ -22,7 +22,7 @@ function ProductDetails() {
   const [search] = useState("");
   const [category] = useState("All");
   const [sort] = useState("");
-  const [addCommentModel, setAddCommentModel] = useState(false);
+  // const [addCommentModel, setAddCommentModel] = useState(false);
 
   const { id } = useParams();
 
@@ -126,11 +126,9 @@ function ProductDetails() {
             <button className="cart-btn" onClick={handleAddToCart}>
               Add To Cart
             </button>
-
-            <button className="buy-btn">Buy Now</button>
           </div>
         </div>
-        <div className="product-comments">
+        {/* <div className="product-comments">
           <div className="add-comment">
             <h2>Comments:</h2>
             <button
@@ -150,10 +148,10 @@ function ProductDetails() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
       <ProductList search={search} category={category} sort={sort} />
-      {addCommentModel && (
+      {/* {addCommentModel && (
         <div className="modal-overlay">
           <div className="add-comment-modal">
             <form className="add-comment-form">
@@ -173,7 +171,7 @@ function ProductDetails() {
             </form>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }

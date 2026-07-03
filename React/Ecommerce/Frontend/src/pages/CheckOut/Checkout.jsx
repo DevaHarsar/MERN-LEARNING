@@ -3,11 +3,51 @@ import "./Checkout.css";
 import { useDispatch } from "react-redux";
 import { getCart } from "../../service/cartService";
 import { setCart } from "../../redux/cartSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { placeOrder } from "../../service/orderService";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [shippingAddress, setShippingAddress] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+  });
+
+  const [paymentMethod, setPaymentMethod] = useState("COD");
+
+  const handleChange = (e) => {
+    setShippingAddress({
+      ...shippingAddress,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handlePlaceOrder = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const orderData = {
+        shippingAddress,
+        paymentMethod,
+      };
+
+      const response = await placeOrder(token, orderData);
+
+      console.log(response.data);
+      alert("Order placed successfully!");
+      dispatch(setCart({ items: [] }));
+      navigate("/orders");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -44,9 +84,8 @@ function Checkout() {
 
   const taxableAmount = subTotal - discount;
 
-  const tax = taxableAmount * 0.1; // 10%
-
-  const shipping = 0;
+  const tax = taxableAmount * 0.1;
+  const shipping = subTotal > 1000 ? 0 : 100;
 
   const total = taxableAmount + tax + shipping;
   return (
@@ -56,16 +95,72 @@ function Checkout() {
         <div className="checkout-form-container">
           <form className="checkout-form">
             <label htmlFor="name">Name:</label>
-            <input type="text" id="name" name="name" required />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={shippingAddress.name}
+              onChange={handleChange}
+              required
+            />
+            <label htmlFor="phone">Phone Number</label>
+
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={shippingAddress.phone}
+              onChange={handleChange}
+              required
+            />
             <label htmlFor="address">Address:</label>
-            <input type="text" id="address" name="address" required />
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={shippingAddress.address}
+              onChange={handleChange}
+              required
+            />
             <label htmlFor="city">City:</label>
-            <input type="text" id="city" name="city" required />
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={shippingAddress.city}
+              onChange={handleChange}
+              required
+            />
             <label htmlFor="state">State:</label>
-            <input type="text" id="state" name="state" required />
+            <input
+              type="text"
+              id="state"
+              name="state"
+              value={shippingAddress.state}
+              onChange={handleChange}
+              required
+            />
             <label htmlFor="zip">Zip Code:</label>
-            <input type="text" id="zip" name="zip" required />
+            <input
+              type="text"
+              id="zip"
+              name="zip"
+              value={shippingAddress.zip}
+              onChange={handleChange}
+              required
+            />
           </form>
+          <div className="payment-section">
+            <label htmlFor="paymentMethod">Payment Method</label>
+            <select
+              id="paymentMethod"
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <option value="COD">Cash On Delivery</option>
+              <option value="Razorpay">Razorpay</option>
+            </select>
+          </div>
         </div>
         <div className="checkout-summary">
           <h2>Order Summary</h2>
@@ -110,7 +205,9 @@ function Checkout() {
           </div>
         </div>
       </div>
-      <button className="place-order-btn">Place Order</button>
+      <button className="place-order-btn" onClick={handlePlaceOrder}>
+        Place Order
+      </button>
     </>
   );
 }

@@ -113,10 +113,11 @@
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  margin-top: 15px;
 }
 
 .cart-btn {
-  background: #8f8f8f;
+  background: #8f908e;
 }
 
 .cart-btn:hover {
@@ -166,9 +167,6 @@
   border-radius: 4px;
 } 
 
-/* ==========================
-   Tablet
-========================== */
 
 @media (max-width: 992px) {
 
@@ -289,9 +287,6 @@
   }
 }
 
-/* ==========================
-   Small Phones
-========================== */
 
 @media (max-width: 480px) {
 

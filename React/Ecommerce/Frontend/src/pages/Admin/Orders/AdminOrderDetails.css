@@ -1,0 +1,187 @@
+.admin-order-details {
+  padding: 20px;
+  background: #f9f9f9;
+  min-height: 100vh;
+}
+
+.admin-order-details h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.details-card {
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.details-card h2 {
+  margin-bottom: 15px;
+  color: #444;
+  font-size: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.details-card p {
+  margin: 8px 0;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Product Table */
+
+.details-card table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.details-card table th,
+.details-card table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.details-card table th {
+  background: #f7f7f7;
+  font-weight: 600;
+}
+
+.details-card table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* Summary */
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 0;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Status */
+
+.order-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.placed {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.confirmed {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.packed {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.shipped {
+  background: #cffafe;
+  color: #0f766e;
+}
+
+.out-for-delivery {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.delivered {
+  background: #d4edda;
+  color: #155724;
+}
+
+.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Payment */
+
+.payment-paid {
+  color: green;
+  font-weight: 600;
+}
+
+.payment-pending {
+  color: orange;
+  font-weight: 600;
+}
+
+.payment-failed {
+  color: red;
+  font-weight: 600;
+}
+
+/* Update Status */
+
+.update-status {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.update-status select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.update-status button {
+  padding: 9px 18px;
+  border: none;
+  background: #6c63ff;
+  color: white;
+  cursor: pointer;
+}
+
+.update-status button:hover {
+  background: #5a52e0;
+}
+
+/* Responsive */
+
+@media (max-width:768px){
+
+.details-card{
+overflow-x:auto;
+}
+
+.details-card table{
+min-width:650px;
+}
+
+.summary-row,
+.summary-total{
+flex-direction:column;
+gap:6px;
+}
+
+.update-status{
+flex-direction:column;
+align-items:flex-start;
+}
+
+}
