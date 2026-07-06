@@ -1,76 +1,99 @@
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import "./ProductList.css";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import { useEffect, useState } from "react";
 import axios from "axios";
+
 function ProductList({ search, category, sort }) {
   const { user } = useContext(AuthContext);
+
   const [products, setProducts] = useState([]);
-  console.log("User in ProductList:", user);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const role = user?.role;
-  console.log("Role in ProductList:", role);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/products`,
+          {
+            params: {
+              q: search,
+              category: category === "all" ? "" : category,
+              sort:
+                sort === "low"
+                  ? "price_asc"
+                  : sort === "high"
+                  ? "price_desc"
+                  : sort === "newest"
+                  ? "newest"
+                  : "",
+              page: currentPage,
+              limit: 8,
+            },
+          }
         );
-        console.log(response.data.products);
-        setProducts(response.data);
+
+        setProducts(response.data.products);
+        setTotalPages(response.data.totalPages);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error(error);
       }
     };
+
     fetchProducts();
-  }, []);
+  }, [search, category, sort, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, category, sort]);
 
   const handleDeleteProduct = (deletedId) => {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product._id !== deletedId),
+    setProducts((prev) =>
+      prev.filter((product) => product._id !== deletedId)
     );
   };
 
-  let filteredProducts = products.filter((product) => {
-    const matchesSearch = product.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-
-    const matchesCategory = category === "all" || product.category === category;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  if (sort === "low") {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  }
-
-  if (sort === "high") {
-    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
-  }
-
-  if (sort === "newest") {
-    filteredProducts = [...filteredProducts].sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
-    );
-  }
   return (
     <>
-      {/* <h1 className="heading-products">Products List</h1> */}
-      <div className="product-list">
-        {filteredProducts.map((product) => {
-          return (
-            <ProductCard
-              key={product._id}
-              product={product}
-              role={role}
-              onDelete={handleDeleteProduct}
-            />
-          );
-        })}
-      </div>
+      {products.length === 0 ? (
+        <h2>No Products Found</h2>
+      ) : (
+        <>
+          <div className="product-list">
+            {products.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                role={role}
+                onDelete={handleDeleteProduct}
+              />
+            ))}
+          </div>
+
+          <div className="pagination">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              Previous
+            </button>
+
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
     </>
   );
 }

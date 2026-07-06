@@ -8,7 +8,7 @@ import {
 import cloudinary from "../config/cloudinary.js";
 export const getProducts = async (req, res) => {
   try {
-    const products = await ProductList();
+    const products = await ProductList(req.query);
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: "Error fetching products" });
