@@ -20,7 +20,7 @@ function ProductDetails() {
   const navigate = useNavigate();
 
   const [search] = useState("");
-  const [category] = useState("All");
+  const [category] = useState("all");
   const [sort] = useState("");
   // const [addCommentModel, setAddCommentModel] = useState(false);
 

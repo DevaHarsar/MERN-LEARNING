@@ -1,9 +1,12 @@
 import "./ChatBotComponent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRobot, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 
 function ChatBotComponent() {
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
     {
@@ -11,14 +14,20 @@ function ChatBotComponent() {
       text: "Hello! How can I help you today?",
     },
   ]);
-  const [chatbotOpen, setChatbotOpen] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const sendMessage = async (userMessage) => {
+    const token = localStorage.getItem("token");
 
-    if (!message.trim()) return;
-
-    const userMessage = message;
+    if(token === null) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Please log in to use the chat feature."
+        }
+      ]);
+      return;
+    }
 
     setMessages((prev) => [
       ...prev,
@@ -38,6 +47,7 @@ function ChatBotComponent() {
         },
         body: JSON.stringify({
           message: userMessage,
+          token: token,
         }),
       });
 
@@ -47,7 +57,8 @@ function ChatBotComponent() {
         ...prev,
         {
           sender: "bot",
-          text: data.reply,
+          text: data.response.assistantMessage,
+          products: data.response.products || [],
         },
       ]);
     } catch (error) {
@@ -61,6 +72,15 @@ function ChatBotComponent() {
         },
       ]);
     }
+  };
+  const [chatbotOpen, setChatbotOpen] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!message.trim()) return;
+
+    await sendMessage(message);
   };
   return (
     <div className="chatbot-container">
@@ -91,7 +111,27 @@ function ChatBotComponent() {
                   msg.sender === "user" ? "user-message" : "bot-message"
                 }
               >
-                {msg.text}
+                <p>{msg.text}</p>
+
+                {msg.products && msg.products.length > 0 && (
+                  <div className="chat-products">
+                    {msg.products.map((product) => (
+                      <div className="chat-product-card" key={product._id}>
+                        <img src={product.images[0]} alt={product.title} />
+
+                        <h4>{product.title}</h4>
+
+                        <p>₹{product.price}</p>
+
+                        <p>Stock : {product.stock ? "In Stock" : "Out of Stock"}</p>
+
+                        <button onClick={() => navigate(`/products/${product._id}`)}>
+                          View Product
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

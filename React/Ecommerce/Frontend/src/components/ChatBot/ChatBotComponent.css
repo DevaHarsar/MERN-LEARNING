@@ -104,3 +104,42 @@
   width: fit-content;
   max-width: 80%;
 }
+
+.chat-products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.chat-product-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+}
+
+.chat-product-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: contain;
+}
+
+.chat-product-card h4 {
+  font-size: 15px;
+  margin: 8px 0;
+}
+
+.chat-product-card p {
+  margin: 4px 0;
+}
+
+.chat-product-card button {
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background: #6d5dfc;
+  color: white;
+}

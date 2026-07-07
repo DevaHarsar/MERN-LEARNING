@@ -1,7 +1,17 @@
 import productModel from "../models/products.model.js";
 
 export const ProductList = async (query) => {
-  const { q, category, minPrice, maxPrice, sort, page = 1, limit = 8 } = query;
+  const {
+    q,
+    category,
+    brand,
+    minPrice,
+    maxPrice,
+    minRating,
+    sort,
+    page = 1,
+    limit = 8,
+  } = query;
   const filter = {};
   if (q) {
     filter.$or = [
@@ -12,7 +22,19 @@ export const ProductList = async (query) => {
         },
       },
       {
+        description: {
+          $regex: q,
+          $options: "i",
+        },
+      },
+      {
         category: {
+          $regex: q,
+          $options: "i",
+        },
+      },
+      {
+        brand: {
           $regex: q,
           $options: "i",
         },
@@ -31,6 +53,18 @@ export const ProductList = async (query) => {
 
     if (maxPrice) {
       filter.price.$lte = Number(maxPrice);
+    }
+    if (brand) {
+      filter.brand = {
+        $regex: brand,
+        $options: "i",
+      };
+    }
+
+    if (minRating) {
+      filter.rating = {
+        $gte: Number(minRating),
+      };
     }
   }
   let sortOption = {};
