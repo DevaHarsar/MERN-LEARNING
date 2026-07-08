@@ -40,7 +40,8 @@ function ChatBotComponent() {
     setMessage("");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_CHATBOT_API}/chat`, {
+      // `${import.meta.env.VITE_CHATBOT_API}/chat`
+      const response = await fetch("http://127.0.0.1:8000/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

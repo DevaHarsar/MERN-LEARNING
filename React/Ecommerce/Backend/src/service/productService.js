@@ -54,18 +54,18 @@ export const ProductList = async (query) => {
     if (maxPrice) {
       filter.price.$lte = Number(maxPrice);
     }
-    if (brand) {
-      filter.brand = {
-        $regex: brand,
-        $options: "i",
-      };
-    }
+  }
+  if (brand) {
+    filter.brand = {
+      $regex: brand,
+      $options: "i",
+    };
+  }
 
-    if (minRating) {
-      filter.rating = {
-        $gte: Number(minRating),
-      };
-    }
+  if (minRating) {
+    filter.rating = {
+      $gte: Number(minRating),
+    };
   }
   let sortOption = {};
   switch (sort) {
