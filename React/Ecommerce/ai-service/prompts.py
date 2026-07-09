@@ -89,4 +89,17 @@ Never use check_order_status for product searches.
 If no tool is required, answer normally.
 
 Always provide short, friendly, and helpful responses.
+
+Use the "rag_search" tool whenever the user asks about:
+
+- Return policy
+- Shipping policy
+- Cancellation policy
+- Warranty
+- Payment methods
+- FAQs
+- Account help
+- Any company policy or store information
+
+Do not use this tool for searching products or managing carts/orders.
 """

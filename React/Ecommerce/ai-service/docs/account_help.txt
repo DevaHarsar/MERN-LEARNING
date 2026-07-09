@@ -1,0 +1,15 @@
+Account Help
+
+Customers can register using their email address.
+
+Passwords should contain at least eight characters.
+
+Forgotten passwords can be reset using the registered email.
+
+Users can update their profile information from the Account Settings page.
+
+Customers can view order history after logging in.
+
+Accounts may be temporarily locked after multiple unsuccessful login attempts.
+
+Users can contact customer support if they are unable to access their account.

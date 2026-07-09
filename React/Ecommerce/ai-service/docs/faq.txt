@@ -1,0 +1,22 @@
+Frequently Asked Questions
+
+Q: How do I place an order?
+A: Browse products, add them to your cart, and complete the checkout process.
+
+Q: Do I need an account to place an order?
+A: Yes, customers must create an account before placing an order.
+
+Q: Can I order multiple products at once?
+A: Yes, you can add multiple products to your cart before checkout.
+
+Q: How can I track my order?
+A: You can track your order from the Orders section of your account.
+
+Q: What payment methods are accepted?
+A: We accept UPI, Credit Card, Debit Card, Net Banking, and Cash on Delivery where available.
+
+Q: Can I save products for later?
+A: Yes, you can add products to your wishlist if the feature is available.
+
+Q: Is my personal information secure?
+A: Yes, customer data is protected using secure authentication and encryption.

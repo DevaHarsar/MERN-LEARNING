@@ -1,0 +1,15 @@
+Payment Methods
+
+We accept UPI payments.
+
+Credit Cards are supported.
+
+Debit Cards are supported.
+
+Net Banking is available for major banks.
+
+Cash on Delivery is available for eligible locations.
+
+EMI options are available on selected products.
+
+All online transactions are secured using encrypted payment gateways.
