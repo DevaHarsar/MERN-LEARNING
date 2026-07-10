@@ -93,6 +93,7 @@ function Dashboard() {
           value={dashboardData?.outOfStockProducts ?? 0}
         />
       </div>
+      <h1 className="dashboard-title">Quick Actions</h1>
       <div className="quick-actions">
         <div
           className="action-card"
@@ -113,11 +114,6 @@ function Dashboard() {
         <div className="action-card" onClick={() => navigate("/admin/orders")}>
           <h4>Orders</h4>
           <p>Manage customer orders</p>
-        </div>
-
-        <div className="action-card">
-          <h4>Categories</h4>
-          <p>Manage categories</p>
         </div>
       </div>
       <div className="dashboard-section">

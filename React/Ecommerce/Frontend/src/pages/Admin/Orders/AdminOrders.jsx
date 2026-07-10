@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus } from "../../../service/orderService";
 import SearchBar from "../../../components/HomeComponents/SearchBarComponent/SearchBar";
 import { useNavigate } from "react-router-dom";
+import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import { toast } from "react-toastify";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -38,9 +40,10 @@ function AdminOrders() {
         prevOrders.map((order) => (order._id === id ? updatedOrder : order)),
       );
 
-      alert("Order updated successfully");
+      toast.success("Order updated successfully");
     } catch (error) {
       console.error(error);
+      toast.error("Error updating order");
     }
   };
 
@@ -61,7 +64,7 @@ function AdminOrders() {
   }
 
   if (loading) {
-    return <h2 className="loading">Loading Orders...</h2>;
+    return <LoaderComponent/>;
   }
 
   return (

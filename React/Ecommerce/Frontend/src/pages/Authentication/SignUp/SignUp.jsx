@@ -5,6 +5,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import "./SignUp.css";
+import { toast } from "react-toastify";
 function SignUp() {
   const navigate = useNavigate();
   const { setUser, setIsAuthenticated } = useContext(AuthContext);
@@ -46,8 +47,9 @@ function SignUp() {
       setIsAuthenticated(true);
 
       navigate("/");
+      toast.success("Signup successful");
     } catch (error) {
-      alert(error.response?.data?.message || "Signup Failed");
+      toast.error(error.response?.data?.message || "Signup Failed");
     }
   };
   return (

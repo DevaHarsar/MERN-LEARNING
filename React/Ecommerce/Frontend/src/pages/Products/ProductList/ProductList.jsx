@@ -3,6 +3,8 @@ import "./ProductList.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import axios from "axios";
+import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import { toast } from "react-toastify";
 
 function ProductList({ search, category, sort }) {
   const { user } = useContext(AuthContext);
@@ -10,6 +12,7 @@ function ProductList({ search, category, sort }) {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const role = user?.role;
 
@@ -38,8 +41,11 @@ function ProductList({ search, category, sort }) {
 
         setProducts(response.data.products);
         setTotalPages(response.data.totalPages);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        toast.error("Error fetching products");
+        setLoading(false);
       }
     };
 
@@ -55,6 +61,10 @@ function ProductList({ search, category, sort }) {
       prev.filter((product) => product._id !== deletedId)
     );
   };
+
+  if (loading) {
+    return <LoaderComponent />;
+  }
 
   return (
     <>

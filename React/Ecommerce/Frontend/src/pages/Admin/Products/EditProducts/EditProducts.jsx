@@ -1,7 +1,9 @@
 import "./EditProducts.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../../../api.js";
+import LoaderComponent from "../../../../components/LoaderComponent/LoaderComponent";
+import {toast} from "react-toastify";
 
 function EditProducts() {
   const { id } = useParams();
@@ -14,7 +16,7 @@ function EditProducts() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${import.meta.env.VITE_API_URL}/products/${id}`,
         );
 
@@ -26,7 +28,7 @@ function EditProducts() {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(
+        const response = await api.get(
           `${import.meta.env.VITE_API_URL}/categories`,
         );
         setCategories(response.data);
@@ -71,30 +73,22 @@ function EditProducts() {
         formData.append("image", selectedImage);
       }
 
-      const token = localStorage.getItem("token");
-
-      await axios.put(
+      await api.put(
         `${import.meta.env.VITE_API_URL}/products/${id}`,
         formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        },
       );
 
-      alert("Product Updated Successfully");
-
+      
       navigate("/admin/products");
+      toast.success("Product updated successfully");
     } catch (error) {
       console.error(error);
-      alert("Failed to update product");
+      toast.error("Failed to update product");
     }
   };
 
   if (!product) {
-    return <h2>Loading...</h2>;
+    return <LoaderComponent/>;
   }
 
   return (

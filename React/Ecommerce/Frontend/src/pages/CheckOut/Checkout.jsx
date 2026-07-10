@@ -6,6 +6,7 @@ import { setCart } from "../../redux/cartSlice";
 import { useEffect, useState } from "react";
 import { placeOrder } from "../../service/orderService";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Checkout() {
   const cartItems = useSelector((state) => state.cart.items);
@@ -41,11 +42,12 @@ function Checkout() {
       const response = await placeOrder(token, orderData);
 
       console.log(response.data);
-      alert("Order placed successfully!");
+      toast.success("Order placed successfully!");
       dispatch(setCart({ items: [] }));
       navigate("/orders");
     } catch (error) {
       console.error(error);
+      toast.error("Error placing order");
     }
   };
 

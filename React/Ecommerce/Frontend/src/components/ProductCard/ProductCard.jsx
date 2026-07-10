@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 import { setCart } from "../../redux/cartSlice";
 import { addToCart } from "../../service/cartService";
+import { toast } from "react-toastify";
 
 function ProductCard({ product, role, onDelete }) {
   const navigate = useNavigate();
@@ -67,8 +68,10 @@ function ProductCard({ product, role, onDelete }) {
       const response = await addToCart(token, product._id);
 
       dispatch(setCart(response.data));
+      toast.success("Product added to cart");
     } catch (error) {
       console.error("Error adding to cart:", error);
+      toast.error("Error adding product to cart");
     }
   };
 

@@ -1,13 +1,9 @@
-import axios from "axios";
+import api from "../api"
 
 const API = `${import.meta.env.VITE_API_URL}/admin/dashboard`;
 
-export const getDashboard = (token)=>{
+export const getDashboard = ()=>{
 
-    return axios.get(API,{
-        headers:{
-            Authorization:`Bearer ${token}`
-        }
-    });
+    return api.get(API);
 
 }

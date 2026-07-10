@@ -11,11 +11,18 @@
   margin: 20px;
 }
 
-.dashboard-card {
-  background: #fff;
-  border: 1px solid #e8e8e8;
-  border-radius: 8px;
-  padding: 20px;
+.dashboard-card{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+    transition:.3s;
+    border:none;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(0,0,0,.12);
 }
 
 .dashboard-card h4 {
@@ -26,7 +33,14 @@
 
 .dashboard-card h2 {
   color: #222;
-  font-size: 28px;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.dashboard-card p {
+  color: #777;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 /* ===========================
@@ -50,6 +64,8 @@
 
 .action-card:hover {
   border-color: #9486ff;
+  transition:all 0.3s ease-in-out;
+  scale: 1.02;
 }
 
 .action-card h4 {

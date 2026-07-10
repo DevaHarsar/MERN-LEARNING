@@ -8,6 +8,7 @@ import axios from "axios";
 import { getCart } from "../../../service/cartService";
 import { useDispatch } from "react-redux";
 import { setCart } from "../../../redux/cartSlice";
+import { toast } from "react-toastify";
 
 function Login() {
   const dispatch = useDispatch();
@@ -55,11 +56,14 @@ function Login() {
 
       if (loggedInUser.role === "admin") {
         navigate("/admin/dashboard");
+        toast.success("Admin login successful");
+
       } else {
         navigate("/");
+        toast.success("Login successful");
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Login Failed");
+      toast.error(error.response?.data?.message || "Login Failed");
     }
   };
 

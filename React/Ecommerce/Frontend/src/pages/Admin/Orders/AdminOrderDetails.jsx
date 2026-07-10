@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAdminOrderById } from "../../../service/orderService";
 import "./AdminOrders.css";
+import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
 
 function AdminOrderDetails() {
   const { id } = useParams();
@@ -29,7 +30,7 @@ function AdminOrderDetails() {
   }, []);
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <LoaderComponent/>;
   }
 
   return (
@@ -101,6 +102,8 @@ function AdminOrderDetails() {
             <tr>
               <th>Product</th>
 
+              <th>Image</th>
+
               <th>Price</th>
 
               <th>Qty</th>
@@ -113,6 +116,10 @@ function AdminOrderDetails() {
             {order.items.map((item) => (
               <tr key={item._id}>
                 <td>{item.title}</td>
+
+                <td>
+                  <img src={item.image} alt={item.title} width="50" />
+                </td>
 
                 <td>₹{item.price}</td>
 

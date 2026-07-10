@@ -2,6 +2,7 @@ import "./OrderList.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyOrders } from "../../../service/orderService";
+import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
 
 function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -28,7 +29,7 @@ function OrderList() {
 
 
   if (loading) {
-    return <h2 className="loading">Loading Orders...</h2>;
+    return <LoaderComponent/>;
   }
 
   if (orders.length === 0) {

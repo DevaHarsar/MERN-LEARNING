@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCart } from "../../../redux/cartSlice";
 import { addToCart } from "../../../service/cartService";
+import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
 
 function ProductDetails() {
   const [productDetails, setProductDetails] = useState(null);
@@ -93,7 +94,7 @@ function ProductDetails() {
   // };
 
   if (!productDetails) {
-    return <h2>Loading...</h2>;
+    return <LoaderComponent />;
   }
   return (
     <>

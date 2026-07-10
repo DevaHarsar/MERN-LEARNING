@@ -2,6 +2,7 @@ import "./ChatBotComponent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRobot, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import api from "../../api.js";
 
 import { useState } from "react";
 
@@ -41,18 +42,16 @@ function ChatBotComponent() {
 
     try {
       // `${import.meta.env.VITE_CHATBOT_API}/chat`
-      const response = await fetch("http://127.0.0.1:8000/chat", {
-        method: "POST",
+      const response = await api.post("http://127.0.0.1:8000/chat", {
+        message: userMessage,
+        token: token,
+      }, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          message: userMessage,
-          token: token,
-        }),
       });
 
-      const data = await response.json();
+      const data = await response.data;
 
       setMessages((prev) => [
         ...prev,

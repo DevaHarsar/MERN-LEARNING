@@ -20,6 +20,8 @@ import OrderList from "./pages/Orders/OrderList/OrderList";
 import OrderDetails from "./pages/Orders/OrderDetails/OrderDetails";
 import AdminOrders from "./pages/Admin/Orders/AdminOrders";
 import AdminOrderDetails from "./pages/Admin/Orders/AdminOrderDetails";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -117,6 +119,9 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer position="top-right"
+        autoClose={2000}
+        theme="light"/>
     </>
   );
 }

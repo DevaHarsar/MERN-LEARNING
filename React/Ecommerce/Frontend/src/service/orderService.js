@@ -1,63 +1,38 @@
-import axios from "axios";
+import api from "../api"
 
 const API = `${import.meta.env.VITE_API_URL}/orders`;
 
 
 export const placeOrder = (token, orderData) => {
-  return axios.post(API, orderData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return api.post(API, orderData);
 };
 
 
-export const getMyOrders = (token) => {
-  return axios.get(`${API}/myorders`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getMyOrders = () => {
+  return api.get(`${API}/myorders`);
 };
 
 
 export const getOrderById = (token, id) => {
-  return axios.get(`${API}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return api.get(`${API}/${id}`);
 };
 
 
 // Admin Services
 
-export const getAllOrders = (token) => {
-  return axios.get(`${API}/admin/orders`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getAllOrders = () => {
+  return api.get(`${API}/admin/orders`);
 };
 
 export const updateOrderStatus = (token, id, orderStatus) => {
-  return axios.patch(
+  return api.patch(
     `${API}/admin/orders/${id}`,
     {
       orderStatus,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
+    }
   );
 };
 
 export const getAdminOrderById = (token, id) => {
-  return axios.get(`${API}/admin/orders/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return api.get(`${API}/admin/orders/${id}`);
 };

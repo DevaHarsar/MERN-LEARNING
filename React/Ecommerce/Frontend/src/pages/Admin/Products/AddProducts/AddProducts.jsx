@@ -1,7 +1,8 @@
 import "./AddProducts.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../../../api.js"
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function AddProducts() {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -13,7 +14,7 @@ function AddProducts() {
     () => {
       const fetchCategories = async () => {
         try {
-          const response = await axios.get(
+          const response = await api.get(
             `${import.meta.env.VITE_API_URL}/categories`,
           );
           setCategories(response.data);
@@ -71,22 +72,15 @@ function AddProducts() {
 
       formData.append("image", product.image);
 
-      const token = localStorage.getItem("token");
 
-      const response = await axios.post(
+      const response = await api.post(
         `${import.meta.env.VITE_API_URL}/products`,
         formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        },
       );
 
       console.log(response.data);
 
-      alert("Product Added Successfully");
+      toast.success("Product added successfully");
       navigate("/admin/products");
 
       setProduct({
@@ -101,18 +95,18 @@ function AddProducts() {
       });
     } catch (error) {
       console.error(error);
-      alert("Failed to add product");
+      toast.error(error.response?.data?.message || "Failed to add product");
     }
   };
 
   const addCategory = async (name) => {
     if (!name.trim()) {
-      alert("Category name is required");
+      toast.error("Category name cannot be empty");
       return;
     }
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `${import.meta.env.VITE_API_URL}/categories`,
         {
           name: name.trim(),
@@ -129,9 +123,9 @@ function AddProducts() {
       setNewCategoryName("");
       setShowCategoryModal(false);
 
-      alert("Category added successfully");
+      toast.success("Category added successfully");
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to add category");
+      toast.error(error.response?.data?.message || "Failed to add category");
     }
   };
   return (

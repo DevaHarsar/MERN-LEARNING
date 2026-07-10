@@ -8,6 +8,7 @@ import {
 } from "../../service/cartService";
 import { useNavigate } from "react-router-dom";
 import "./Carts.css";
+import {toast} from "react-toastify"
 
 function Carts() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function Carts() {
       dispatch(setCart(response.data));
     } catch (error) {
       console.log(error);
+      toast.error("Error loading cart");
     }
   };
 
@@ -37,10 +39,12 @@ function Carts() {
         item.product._id,
         item.quantity + 1
       );
+      toast.success("Item quantity updated successfully");
 
       loadCart();
     } catch (error) {
       console.log(error);
+      toast.error("Error updating item quantity");
     }
   };
 
@@ -53,20 +57,25 @@ function Carts() {
         item.product._id,
         item.quantity - 1
       );
+      toast.success("Item quantity updated successfully");
 
       loadCart();
     } catch (error) {
       console.log(error);
+      toast.error("Error updating item quantity");
     }
   };
 
   const handleRemove = async (item) => {
     try {
       await removeCartItem(token, item.product._id);
+      toast.success("Item removed from cart successfully");
+
 
       loadCart();
     } catch (error) {
       console.log(error);
+      toast.error("Error removing item from cart");
     }
   };
 

@@ -2,6 +2,7 @@ import "./OrderDetails.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOrderById } from "../../../service/orderService";
+import LoaderComponent from "../../../components/LoaderComponent/LoaderComponent"
 
 function OrderDetails() {
   const { id } = useParams();
@@ -28,11 +29,11 @@ function OrderDetails() {
 
 
   if (loading) {
-    return <h2 className="loading">Loading...</h2>;
+    return <LoaderComponent/>;
   }
 
   if (!order) {
-    return <h2 className="loading">Order not found</h2>;
+    return <LoaderComponent/>;
   }
 
   return (

@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setCart } from "../../redux/cartSlice";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 function Navbar() {
   const { isAuthenticated, user, setIsAuthenticated, setUser } =
     useContext(AuthContext);
@@ -48,6 +49,7 @@ function Navbar() {
     localStorage.removeItem("token");
     setShowDropdown(false);
     navigate("/login");
+    toast.success("Logout successful");
   };
 
   return (
