@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCart } from "../../../redux/cartSlice";
 import { addToCart } from "../../../service/cartService";
-import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import LoaderComponent from "../../../components/LoaderComponent/LoaderComponent";
 
 function ProductDetails() {
   const [productDetails, setProductDetails] = useState(null);
