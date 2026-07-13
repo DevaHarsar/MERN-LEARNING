@@ -2,7 +2,7 @@ import "./OrderList.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyOrders } from "../../../service/orderService";
-import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import LoaderComponent from "../../../components/LoaderComponent/LoaderComponent";
 
 function OrderList() {
   const [orders, setOrders] = useState([]);

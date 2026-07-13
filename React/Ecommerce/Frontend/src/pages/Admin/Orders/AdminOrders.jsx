@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllOrders, updateOrderStatus } from "../../../service/orderService";
 import SearchBar from "../../../components/HomeComponents/SearchBarComponent/SearchBar";
 import { useNavigate } from "react-router-dom";
-import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import LoaderComponent from "../../../components/LoaderComponent/LoaderComponent";
 import { toast } from "react-toastify";
 
 function AdminOrders() {

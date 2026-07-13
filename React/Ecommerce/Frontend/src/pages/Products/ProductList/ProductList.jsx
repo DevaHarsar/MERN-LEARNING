@@ -3,7 +3,7 @@ import "./ProductList.css";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import axios from "axios";
-import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import LoaderComponent from "../../../components/LoaderComponent/LoaderComponent";
 import { toast } from "react-toastify";
 
 function ProductList({ search, category, sort }) {

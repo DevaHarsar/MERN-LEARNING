@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getAdminOrderById } from "../../../service/orderService";
 import "./AdminOrders.css";
-import LoaderComponent from "../../../components/LoaderComponent/loaderComponent";
+import LoaderComponent from "../../../components/LoaderComponent/LoaderComponent";
 
 function AdminOrderDetails() {
   const { id } = useParams();
